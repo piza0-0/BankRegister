@@ -11,11 +11,13 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    person.cpp
+    person.cpp \
+    persontablewidgetitem.cpp
 
 HEADERS += \
     mainwindow.h \
-    person.h
+    person.h \
+    persontablewidgetitem.h
 
 FORMS += \
     mainwindow.ui

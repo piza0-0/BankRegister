@@ -3,16 +3,21 @@
 
 #include <QObject>
 #include <QString>
-#include <QSharedPointer>
+
 
 
 class Person : public QObject
 {
     Q_OBJECT
 public:
-    explicit Person(QString pName, QString pAge, QString pGrade,QObject *parent = nullptr);
-    const QString GetName();
+    explicit Person(QString Name, QString Age, QString Grade,QObject *parent = nullptr);
+    ~Person();
+    const QString getName() const;
 
+
+    const QString getAge() const;
+
+    const QString getGrade() const;
 
 signals:
 
@@ -20,11 +25,11 @@ signals:
 
 private:
     //personal information (input)
-    QString name;
-    QString age;
-    QString grade;
+    QString m_name;
+    QString m_age;
+    QString m_grade;
 
-    QString Info;
+
 
 
 };

@@ -1,16 +1,32 @@
 #include "person.h"
+#include <QDebug>
 
 
-
-Person::Person(QString pName, QString pAge, QString pGrade,QObject *parent)
+Person::Person(QString Name, QString Age, QString Grade,QObject *parent)
     : QObject(parent)
 {
-    this->name = pName;    
-    this->age = pAge;
-    this->grade = pGrade;
+    this->m_name = Name;
+    this->m_age = Age;
+    this->m_grade = Grade;
 }
 
-const QString Person::GetName()
+Person::~Person()
+{
+    qDebug()<<"Деструктор PERSON";
+
+}
+
+const QString Person::getName() const
 {    
-    return name;
+    return m_name;
+}
+
+const QString Person::getAge() const
+{
+    return m_age;
+}
+
+const QString Person::getGrade() const
+{
+    return m_grade;
 }

@@ -2,10 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QList>
-#include <QSharedPointer>
-
 #include "person.h"
+#include "persontablewidgetitem.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,9 +21,10 @@ private slots:
     void on_pushButton_select_clicked();
 
 
+    void on_pushButton_TEST_clicked();
+
 private:
     Ui::MainWindow *ui;
 
-    QList <QSharedPointer<Person>> DataList;
 };
 #endif // MAINWINDOW_H
