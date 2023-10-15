@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "person.h"
 #include "persontablewidgetitem.h"
+#include "LabelDelegate.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +27,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-
+    QStandardItemModel* model = nullptr;
+    LabelDelegate* delegate = nullptr;
 };
 #endif // MAINWINDOW_H
