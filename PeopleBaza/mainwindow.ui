@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1165</width>
-    <height>600</height>
+    <width>1307</width>
+    <height>779</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -44,7 +44,7 @@
     </property>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_name">
+      <widget class="QLineEdit" name="lineEdit_surname">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -130,7 +130,7 @@
       </spacer>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_surname"/>
+      <widget class="QLineEdit" name="lineEdit_name"/>
      </item>
      <item row="4" column="1">
       <widget class="QLineEdit" name="lineEdit_patronymic"/>
@@ -149,7 +149,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Имя</string>
+        <string>Фамилия</string>
        </property>
        <property name="textFormat">
         <enum>Qt::PlainText</enum>
@@ -190,7 +190,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Фамилия</string>
+        <string>Имя</string>
        </property>
       </widget>
      </item>
@@ -213,8 +213,8 @@
      <rect>
       <x>630</x>
       <y>40</y>
-      <width>501</width>
-      <height>511</height>
+      <width>601</width>
+      <height>681</height>
      </rect>
     </property>
    </widget>
@@ -237,13 +237,23 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1165</width>
+     <width>1307</width>
      <height>22</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_surname</tabstop>
+  <tabstop>lineEdit_name</tabstop>
+  <tabstop>lineEdit_patronymic</tabstop>
+  <tabstop>lineEdit_age</tabstop>
+  <tabstop>lineEdit_phone</tabstop>
+  <tabstop>pushButton_select</tabstop>
+  <tabstop>tableWidget_List</tabstop>
+  <tabstop>pushButton_TEST</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

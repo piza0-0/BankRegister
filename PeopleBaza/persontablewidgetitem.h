@@ -13,6 +13,11 @@ public:
     ~PersonTableWidgetItem();
 
     void setCurrentName();
+    void setCurrentSurname();
+    void setCurrentPatronymic();
+    void setCurrentAge();
+    void setCurrentPhone();
+
     Person *pPersonTableItem() const;
 
 

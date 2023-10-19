@@ -20,6 +20,22 @@ void PersonTableWidgetItem::setCurrentName()
 {
     this->setText(m_pPersonTableItem->getName());
 }
+void PersonTableWidgetItem::setCurrentSurname()
+{
+    this->setText(m_pPersonTableItem->getSurname());
+}
+void PersonTableWidgetItem::setCurrentPatronymic()
+{
+    this->setText(m_pPersonTableItem->getPatronymic());
+}
+void PersonTableWidgetItem::setCurrentAge()
+{
+    this->setText(m_pPersonTableItem->getAge());
+}
+void PersonTableWidgetItem::setCurrentPhone()
+{
+    this->setText(m_pPersonTableItem->getPhone());
+}
 
 Person *PersonTableWidgetItem::pPersonTableItem() const
 {

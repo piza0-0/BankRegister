@@ -8,9 +8,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->tableWidget_List->setColumnCount(5);
-    ui->tableWidget_List->setHorizontalHeaderLabels({"Имя","Фамилия","Отчество", "Возраст", "Класс"});
+    ui->tableWidget_List->setHorizontalHeaderLabels({"Фамилия","Имя","Отчество", "Возраст", "Номер"});
     ui->tableWidget_List->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tableWidget_List->setWordWrap(true);
+
+    ui->lineEdit_surname->setFocus();
+
+    QWidget::setTabOrder(QWidget::focusWidget(),ui->lineEdit_name);
+    QWidget::setTabOrder(ui->lineEdit_name, ui->lineEdit_patronymic);
+    QWidget::setTabOrder(ui->lineEdit_patronymic, ui->lineEdit_age);
+    QWidget::setTabOrder(ui->lineEdit_age,ui->lineEdit_phone);
+    QWidget::setTabOrder(ui->lineEdit_phone,ui->lineEdit_surname);
 
 }
 
@@ -21,29 +28,37 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_pushButton_select_clicked()
 {
-    Person *pPerson = new Person (
-                ui->lineEdit_name->text(),
+    Person *pPerson = new Person (                
                 ui->lineEdit_surname->text(),
+                ui->lineEdit_name->text(),
                 ui->lineEdit_patronymic->text(),
                 ui->lineEdit_age->text(),
                 ui->lineEdit_phone->text(),
-                this
-    );
+                this );
 
+    PersonTableWidgetItem *pPersonTableWidgetItemSurname = new PersonTableWidgetItem(pPerson);
     PersonTableWidgetItem *pPersonTableWidgetItemName = new PersonTableWidgetItem(pPerson);
-
-    pPerson = nullptr;
+    PersonTableWidgetItem *pPersonTableWidgetItemPatronymic = new PersonTableWidgetItem(pPerson);
+    PersonTableWidgetItem *pPersonTableWidgetItemAge = new PersonTableWidgetItem(pPerson);
+    PersonTableWidgetItem *pPersonTableWidgetItemPhone = new PersonTableWidgetItem(pPerson);
 
     int row = ui->tableWidget_List->rowCount();
     ui->tableWidget_List->insertRow(row);
 
     pPersonTableWidgetItemName->setCurrentName();
+    pPersonTableWidgetItemSurname->setCurrentSurname();
+    pPersonTableWidgetItemPatronymic->setCurrentPatronymic();
+    pPersonTableWidgetItemAge->setCurrentAge();
+    pPersonTableWidgetItemPhone->setCurrentPhone();
 
-    ui->tableWidget_List->setItem(row,0, pPersonTableWidgetItemName);
-    //ui->tableWidget_List
+    ui->tableWidget_List->setItem(row,0, pPersonTableWidgetItemSurname);
+    ui->tableWidget_List->setItem(row,1, pPersonTableWidgetItemName);
+    ui->tableWidget_List->setItem(row,2, pPersonTableWidgetItemPatronymic);
+    ui->tableWidget_List->setItem(row,3, pPersonTableWidgetItemAge);
+    ui->tableWidget_List->setItem(row,4, pPersonTableWidgetItemPhone);
+
 
     ui->lineEdit_name->clear();
     ui->lineEdit_surname->clear();
@@ -61,10 +76,23 @@ void MainWindow::on_pushButton_TEST_clicked()
     {
         qDebug() << i;
         ui->lineEdit_name->setText("TESTTESTTEST");
-        ui->lineEdit_age->setText("999");
-        ui->lineEdit_grade->setText("1111");
+        ui->lineEdit_surname->setText("TEST");
+        ui->lineEdit_patronymic->setText("sdasndajsd");
+        ui->lineEdit_age->setText("999");        
+        ui->lineEdit_phone->setText("1111");
+
         on_pushButton_select_clicked();
     }
 
 }
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Down)
+    {
+        QWidget::focusWidget()->nextInFocusChain()->setFocus();
+    }
+
+}
+
 

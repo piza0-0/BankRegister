@@ -2,7 +2,7 @@
 #include <QDebug>
 
 
-Person::Person(QString name, QString surname, QString patronymic, QString age, QString phone,QObject *parent)
+Person::Person(QString surname, QString name, QString patronymic, QString age, QString phone,QObject *parent)
     : QObject(parent)
 {
     this->m_name = name;

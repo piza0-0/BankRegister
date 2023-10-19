@@ -10,7 +10,7 @@ class Person : public QObject
 {
     Q_OBJECT
 public:
-    explicit Person(QString name, QString surname, QString patronymic, QString age, QString phone,QObject *parent = nullptr);
+    explicit Person(QString surname, QString name, QString patronymic, QString age, QString phone,QObject *parent = nullptr);
     ~Person();
 
     const QString &getName() const;
