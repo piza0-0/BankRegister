@@ -12,10 +12,7 @@ public:
     PersonTableWidgetItem(Person* newPerson);
     ~PersonTableWidgetItem();
 
-    int getRows() const;
     void setCurrentName();
-    void setCurrentAge();
-    void setCurrentGrade();
     Person *pPersonTableItem() const;
 
 

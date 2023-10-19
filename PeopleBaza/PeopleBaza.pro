@@ -15,7 +15,6 @@ SOURCES += \
     persontablewidgetitem.cpp
 
 HEADERS += \
-    LabelDelegate.h \
     mainwindow.h \
     person.h \
     persontablewidgetitem.h

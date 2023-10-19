@@ -2,12 +2,14 @@
 #include <QDebug>
 
 
-Person::Person(QString Name, QString Age, QString Grade,QObject *parent)
+Person::Person(QString name, QString surname, QString patronymic, QString age, QString phone,QObject *parent)
     : QObject(parent)
 {
-    this->m_name = Name;
-    this->m_age = Age;
-    this->m_grade = Grade;
+    this->m_name = name;
+    this->m_surname = surname;
+    this->m_patronymic = patronymic;
+    this->m_age = age;
+    this->m_phone = phone;
 }
 
 Person::~Person()
@@ -16,17 +18,28 @@ Person::~Person()
 
 }
 
-const QString Person::getName() const
+const QString &Person::getName() const
 {    
     return m_name;
 }
+const QString &Person::getSurname() const
+{
+    return m_surname;
+}
 
-const QString Person::getAge() const
+const QString &Person::getPatronymic() const
+{
+    return m_patronymic;
+}
+
+
+const QString &Person::getAge() const
 {
     return m_age;
 }
 
-const QString Person::getGrade() const
+const QString &Person::getPhone() const
 {
-    return m_grade;
+    return m_phone;
 }
+

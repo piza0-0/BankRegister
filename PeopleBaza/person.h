@@ -10,14 +10,15 @@ class Person : public QObject
 {
     Q_OBJECT
 public:
-    explicit Person(QString Name, QString Age, QString Grade,QObject *parent = nullptr);
+    explicit Person(QString name, QString surname, QString patronymic, QString age, QString phone,QObject *parent = nullptr);
     ~Person();
-    const QString getName() const;
 
+    const QString &getName() const;
+    const QString &getSurname() const;
+    const QString &getPatronymic() const;
+    const QString &getAge() const;
+    const QString &getPhone() const;
 
-    const QString getAge() const;
-
-    const QString getGrade() const;
 
 signals:
 
@@ -26,12 +27,10 @@ signals:
 private:
     //personal information (input)
     QString m_name;
+    QString m_surname;
+    QString m_patronymic;
     QString m_age;
-    QString m_grade;
-
-
-
-
+    QString m_phone;
 };
 
 #endif // PERSON_H

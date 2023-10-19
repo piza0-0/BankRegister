@@ -30,10 +30,10 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>130</y>
-      <width>541</width>
-      <height>129</height>
+      <x>50</x>
+      <y>90</y>
+      <width>561</width>
+      <height>241</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -43,24 +43,6 @@
      </sizepolicy>
     </property>
     <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>14</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>ФИО</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1">
       <widget class="QLineEdit" name="lineEdit_name">
        <property name="sizePolicy">
@@ -77,8 +59,8 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_4">
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_age">
        <property name="font">
         <font>
          <pointsize>14</pointsize>
@@ -89,7 +71,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="6" column="1">
       <widget class="QLineEdit" name="lineEdit_age">
        <property name="maximumSize">
         <size>
@@ -99,7 +81,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="7" column="1">
       <spacer name="verticalSpacer_3">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -112,20 +94,20 @@
        </property>
       </spacer>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_5">
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_phone">
        <property name="font">
         <font>
          <pointsize>14</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Класс</string>
+        <string>Телефон</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_grade">
+     <item row="8" column="1">
+      <widget class="QLineEdit" name="lineEdit_phone">
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -147,15 +129,92 @@
        </property>
       </spacer>
      </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEdit_surname"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="lineEdit_patronymic"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_name">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Имя</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::PlainText</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="5" column="1">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_surname">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Фамилия</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_patronymic">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Отчество</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QTableWidget" name="tableWidget_List">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>290</y>
-      <width>461</width>
-      <height>251</height>
+      <x>630</x>
+      <y>40</y>
+      <width>501</width>
+      <height>511</height>
      </rect>
     </property>
    </widget>
@@ -170,16 +229,6 @@
     </property>
     <property name="text">
      <string>TEST</string>
-    </property>
-   </widget>
-   <widget class="QTableView" name="tableView">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>160</y>
-      <width>371</width>
-      <height>381</height>
-     </rect>
     </property>
    </widget>
   </widget>
