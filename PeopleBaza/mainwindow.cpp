@@ -19,6 +19,16 @@ MainWindow::MainWindow(QWidget *parent)
     QWidget::setTabOrder(ui->lineEdit_age,ui->lineEdit_phone);
     QWidget::setTabOrder(ui->lineEdit_phone,ui->lineEdit_surname);
 
+//    ui->lineEdit_name->setEnabled(false);
+//    ui->lineEdit_surname->setEnabled(false);
+//    ui->lineEdit_patronymic->setEnabled(false);
+//    ui->lineEdit_age->setEnabled(false);
+//    ui->lineEdit_phone->setEnabled(false);
+
+//    ui->pushButton_select->setEnabled(false);
+//    ui->pushButton_TEST->setEnabled(false);
+
+
 }
 
 MainWindow::~MainWindow()
