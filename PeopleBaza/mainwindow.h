@@ -25,9 +25,10 @@ protected:
 
 private slots:
 
-    void on_pushButton_select_clicked();
 
-    void on_pushButton_TEST_clicked();
+    void on_pb_select_clicked();
+
+    void on_pb_test_clicked();
 
 private:
     Ui::MainWindow *ui;
