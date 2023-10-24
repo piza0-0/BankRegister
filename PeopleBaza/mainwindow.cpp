@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_bankList<<"Тинькофф"<<"ВТБ"<<"Сбербанк"<<"Альфа банк"<<"Газпром банк"<<"Росбанк"<<"Совкомбанк"<<"Райффайзен банк"<<"Открытие банк"
              <<"Банк Санкт-Петербург"<<"Почта банк"<<"Home credit bank"<<"Банк Россия"<<"Уралсиб"<<"МКБ"<<"ПСБ"<<"ЮниКредит";
+    m_bankList.sort();
+    ui->lw_checkBanks->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->lw_checkBanks->addItems(m_bankList);
 
 //    ui->lineEdit_name->setEnabled(false);
@@ -43,12 +45,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pb_select_clicked()
 {
+
     Person *pPerson = new Person (
                 ui->le_surname->text(),
                 ui->le_name->text(),
                 ui->le_patronymic->text(),
                 ui->le_age->text(),
                 ui->le_phone->text(),
+                ui->lw_checkBanks->selectedItems(),
                 this );
 
     PersonTableWidgetItem *pPersonTableWidgetItemSurname = new PersonTableWidgetItem(pPerson);
@@ -73,6 +77,7 @@ void MainWindow::on_pb_select_clicked()
     ui->tw_personList->setItem(row,4, pPersonTableWidgetItemPhone);
 
 
+    ui->lw_checkBanks->clearSelection();
     ui->le_name->clear();
     ui->le_surname->clear();
     ui->le_patronymic->clear();

@@ -2,7 +2,7 @@
 #include <QDebug>
 
 
-Person::Person(QString surname, QString name, QString patronymic, QString age, QString phone,QObject *parent)
+Person::Person(QString surname, QString name, QString patronymic, QString age, QString phone,QList <QListWidgetItem*> personBanks,QObject *parent)
     : QObject(parent)
 {
     this->m_name = name;
@@ -10,6 +10,7 @@ Person::Person(QString surname, QString name, QString patronymic, QString age, Q
     this->m_patronymic = patronymic;
     this->m_age = age;
     this->m_phone = phone;
+    this->m_personBanks = personBanks;
 }
 
 Person::~Person()

@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QString>
+#include <QList>
+#include <QListWidgetItem>
 
 
 
@@ -10,7 +12,7 @@ class Person : public QObject
 {
     Q_OBJECT
 public:
-    explicit Person(QString surname, QString name, QString patronymic, QString age, QString phone,QObject *parent = nullptr);
+    explicit Person(QString surname, QString name, QString patronymic, QString age, QString phone,QList <QListWidgetItem*> personBanks,QObject *parent = nullptr);
     ~Person();
 
     const QString &getName() const;
@@ -31,6 +33,8 @@ private:
     QString m_patronymic;
     QString m_age;
     QString m_phone;
+    QList <QListWidgetItem*> m_personBanks;
+
 };
 
 #endif // PERSON_H
