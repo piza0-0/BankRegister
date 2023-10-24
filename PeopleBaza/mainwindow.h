@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QStringList>
 #include "person.h"
 #include "persontablewidgetitem.h"
 
@@ -32,5 +33,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QStringList m_bankList;
 };
 #endif // MAINWINDOW_H

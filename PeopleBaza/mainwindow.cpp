@@ -18,6 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
     QWidget::setTabOrder(ui->le_patronymic,ui->le_age);
     QWidget::setTabOrder(ui->le_age,ui->le_phone);
 
+    m_bankList<<"Тинькофф"<<"ВТБ"<<"Сбербанк"<<"Альфа банк"<<"Газпром банк"<<"Росбанк"<<"Совкомбанк"<<"Райффайзен банк"<<"Открытие банк"
+             <<"Банк Санкт-Петербург"<<"Почта банк"<<"Home credit bank"<<"Банк Россия"<<"Уралсиб"<<"МКБ"<<"ПСБ"<<"ЮниКредит";
+    ui->lw_checkBanks->addItems(m_bankList);
+
 //    ui->lineEdit_name->setEnabled(false);
 //    ui->lineEdit_surname->setEnabled(false);
 //    ui->lineEdit_patronymic->setEnabled(false);

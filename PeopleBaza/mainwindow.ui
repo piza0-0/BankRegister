@@ -14,18 +14,8 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="2">
-     <widget class="QTableWidget" name="tw_personList">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>60</horstretch>
-        <verstretch>60</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
+   <layout class="QFormLayout" name="formLayout">
+    <item row="1" column="1">
      <widget class="QListWidget" name="lw_bankList">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -35,16 +25,19 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="0" column="0">
      <layout class="QFormLayout" name="formLayout_2">
       <property name="sizeConstraint">
        <enum>QLayout::SetMaximumSize</enum>
       </property>
       <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+       <enum>QFormLayout::ExpandingFieldsGrow</enum>
       </property>
       <property name="rowWrapPolicy">
        <enum>QFormLayout::DontWrapRows</enum>
+      </property>
+      <property name="formAlignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
       <property name="horizontalSpacing">
        <number>6</number>
@@ -62,7 +55,7 @@
       <item row="0" column="1">
        <widget class="QLineEdit" name="le_surname">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>40</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -79,7 +72,7 @@
       <item row="1" column="1">
        <widget class="QLineEdit" name="le_name">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>40</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -96,7 +89,7 @@
       <item row="2" column="1">
        <widget class="QLineEdit" name="le_patronymic">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>40</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -113,7 +106,7 @@
       <item row="3" column="1">
        <widget class="QLineEdit" name="le_age">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>40</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -130,14 +123,14 @@
       <item row="4" column="1">
        <widget class="QLineEdit" name="le_phone">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>40</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QPushButton" name="pb_select">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -145,12 +138,15 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
         <property name="text">
          <string>Добавить</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="1">
        <widget class="QPushButton" name="pb_test">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -159,14 +155,33 @@
          </sizepolicy>
         </property>
         <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+         <enum>Qt::RightToLeft</enum>
         </property>
         <property name="text">
          <string>Тест</string>
         </property>
        </widget>
       </item>
+      <item row="5" column="1">
+       <widget class="QListWidget" name="lw_checkBanks"/>
+      </item>
      </layout>
+    </item>
+    <item row="0" column="1">
+     <widget class="QTableWidget" name="tw_personList">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>30</horstretch>
+        <verstretch>60</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>500</width>
+        <height>500</height>
+       </size>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
