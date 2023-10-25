@@ -44,3 +44,8 @@ const QString &Person::getPhone() const
     return m_phone;
 }
 
+const QList<QListWidgetItem *> &Person::personBanks() const
+{
+    return m_personBanks;
+}
+

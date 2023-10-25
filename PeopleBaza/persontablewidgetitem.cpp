@@ -1,9 +1,10 @@
 #include "persontablewidgetitem.h"
 #include <QDebug>
 
-PersonTableWidgetItem::PersonTableWidgetItem(Person* newPerson)
+PersonTableWidgetItem::PersonTableWidgetItem(const Person* newPerson)
 {
     m_pPersonTableItem = newPerson;
+    setData(Qt::UserRole,QVariant::fromValue(newPerson));
 }
 
 // 3 items -- 1 person
@@ -37,7 +38,14 @@ void PersonTableWidgetItem::setCurrentPhone()
     this->setText(m_pPersonTableItem->getPhone());
 }
 
-Person *PersonTableWidgetItem::pPersonTableItem() const
+
+
+const QList<QListWidgetItem *> &PersonTableWidgetItem::getPersonBanks()
+{
+    return m_pPersonTableItem->personBanks();
+}
+
+const Person *PersonTableWidgetItem::pPersonTableItem() const
 {
     return m_pPersonTableItem;
 }

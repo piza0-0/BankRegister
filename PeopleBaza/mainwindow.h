@@ -25,7 +25,7 @@ protected:
 
 private slots:
 
-
+    void twItemSelection(QTableWidgetItem*);
     void on_pb_select_clicked();
 
     void on_pb_test_clicked();

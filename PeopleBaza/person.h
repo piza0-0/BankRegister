@@ -22,6 +22,8 @@ public:
     const QString &getPhone() const;
 
 
+    const QList<QListWidgetItem *> &personBanks() const;
+
 signals:
 
 

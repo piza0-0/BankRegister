@@ -9,7 +9,7 @@
 class PersonTableWidgetItem : public QTableWidgetItem
 {
 public:
-    PersonTableWidgetItem(Person* newPerson);
+    PersonTableWidgetItem(const Person* newPerson);
     ~PersonTableWidgetItem();
 
     void setCurrentName();
@@ -17,13 +17,13 @@ public:
     void setCurrentPatronymic();
     void setCurrentAge();
     void setCurrentPhone();
-
-    Person *pPersonTableItem() const;
+    const QList <QListWidgetItem*> &getPersonBanks();
+    const Person *pPersonTableItem() const;
 
 
 
 private:
-    Person* m_pPersonTableItem;
+    const Person* m_pPersonTableItem;
 
 };
 
