@@ -6,8 +6,6 @@
 #include "person.h"
 #include "persontablewidgetitem.h"
 
-
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -34,4 +32,5 @@ private:
     Ui::MainWindow *ui;
     QStringList m_bankList;
 };
+
 #endif // MAINWINDOW_H

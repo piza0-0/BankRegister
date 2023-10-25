@@ -11,8 +11,10 @@
 class Person : public QObject
 {
     Q_OBJECT
+
 public:
-    explicit Person(QString surname, QString name, QString patronymic, QString age, QString phone,QList <QListWidgetItem*> personBanks,QObject *parent = nullptr);
+    explicit Person(QString surname, QString name, QString patronymic, QString age, QString phone,
+                    QList <QListWidgetItem*> personBanks,QObject *parent = nullptr);
     ~Person();
 
     const QString &getName() const;
@@ -24,8 +26,6 @@ public:
 
     const QList<QListWidgetItem *> &personBanks() const;
 
-signals:
-
 
 
 private:
@@ -35,7 +35,7 @@ private:
     QString m_patronymic;
     QString m_age;
     QString m_phone;
-    QList <QListWidgetItem*> m_personBanks;
+    QList<QListWidgetItem*> m_personBanks;
 
 };
 

@@ -9,7 +9,7 @@
 class PersonTableWidgetItem : public QTableWidgetItem
 {
 public:
-    PersonTableWidgetItem(const Person* newPerson);
+    PersonTableWidgetItem(Person* newPerson);
     ~PersonTableWidgetItem();
 
     void setCurrentName();
@@ -23,8 +23,7 @@ public:
 
 
 private:
-    const Person* m_pPersonTableItem;
-
+    Person* m_pPersonTableItem;
 };
 
 #endif // PERSONTABLEWIDGETITEM_H

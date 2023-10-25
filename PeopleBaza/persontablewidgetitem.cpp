@@ -1,10 +1,10 @@
 #include "persontablewidgetitem.h"
 #include <QDebug>
 
-PersonTableWidgetItem::PersonTableWidgetItem(const Person* newPerson)
+PersonTableWidgetItem::PersonTableWidgetItem(Person* newPerson)
 {
     m_pPersonTableItem = newPerson;
-    setData(Qt::UserRole,QVariant::fromValue(newPerson));
+    setData(Qt::UserRole, QVariant::fromValue(newPerson));
 }
 
 // 3 items -- 1 person
