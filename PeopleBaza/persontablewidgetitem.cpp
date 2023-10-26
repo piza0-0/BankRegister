@@ -4,7 +4,6 @@
 PersonTableWidgetItem::PersonTableWidgetItem(Person* newPerson)
 {
     m_pPersonTableItem = newPerson;
-    setData(Qt::UserRole, QVariant::fromValue(newPerson));
 }
 
 // 3 items -- 1 person
@@ -38,15 +37,8 @@ void PersonTableWidgetItem::setCurrentPhone()
     this->setText(m_pPersonTableItem->getPhone());
 }
 
-
-
-const QList<QListWidgetItem *> &PersonTableWidgetItem::getPersonBanks()
+const QStringList &PersonTableWidgetItem::getPersonBanks() const
 {
     return m_pPersonTableItem->personBanks();
-}
-
-const Person *PersonTableWidgetItem::pPersonTableItem() const
-{
-    return m_pPersonTableItem;
 }
 

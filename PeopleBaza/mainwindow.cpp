@@ -12,7 +12,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tw_personList->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tw_personList->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tw_personList->setSelectionMode(QAbstractItemView::SingleSelection);
-    connect(ui->tw_personList, &QTableWidget::itemClicked, this, &MainWindow::twItemSelection);
+
+    connect(ui->tw_personList, &QTableWidget::itemClicked,
+            [=](QTableWidgetItem* itemSelected)
+    {    ui->lw_bankList->clear();
+        PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>(itemSelected);
+        ui->lw_bankList->addItems(personItem->getPersonBanks());
+    });
+
 
     ui->le_surname->setFocus();
 
@@ -47,14 +54,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pb_select_clicked()
 {
-    QList<QListWidgetItem*> buffer = ui->lw_checkBanks->selectedItems();
-    QStringList stringList;
-    for(int i = 0; i < buffer.size(); ++i) {
-        stringList.append(buffer[i]->data(Qt::DisplayRole).toString());
-    }
-    for(int i = 0; i < stringList.size(); ++i) {
-        qDebug() << stringList.at(i);
-    }
+
     Person *pPerson = new Person (
                 ui->le_surname->text(),
                 ui->le_name->text(),
@@ -102,19 +102,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
 
 }
-
-void MainWindow::twItemSelection(QTableWidgetItem* itemSelected)
-{
-//    const Person* person = itemSelected->data(Qt::UserRole).value<Person*>();
-
-    PersonTableWidgetItem* item = dynamic_cast<PersonTableWidgetItem*>(itemSelected);
-    qDebug() << "hello!!!" << (1 / 2) << static_cast<qreal>(1) / 2;
-
-    //person->personBanks(); // Реализовать присвоение списка банков и отправки его в Лист Банков
-    //ui->lw_bankList->addItems(person->personBanks());
-    // ТУТ Я КУМЕКАЮ НАДО ДОДЕЛАТЬ ФУНКЦИОНАЛ. ЕСТЬ ВАРИАНТ ТОЛЬКО ОБХОДНЫМИ ПУТЯМИ (ПОКА ЧТО)
-}
-
 
 
 ////////TEST////////
