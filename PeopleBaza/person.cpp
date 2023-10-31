@@ -10,7 +10,7 @@ Person::Person(QString surname, QString name, QString patronymic, QString age, Q
     this->m_patronymic = patronymic;
     this->m_age = age;
     this->m_phone = phone;
-    this->m_personBanks = personBanks;
+    overwriteBankList(personBanks);
 }
 
 Person::~Person()
@@ -44,8 +44,16 @@ const QString &Person::getPhone() const
     return m_phone;
 }
 
-const QList<QListWidgetItem *> &Person::personBanks() const
+const QStringList &Person::personBanks() const
 {
     return m_personBanks;
+}
+
+
+void Person::overwriteBankList(QList <QListWidgetItem*> personBanks)
+{
+    for(int i = 0; i < personBanks.size(); ++i) {
+        m_personBanks.append(personBanks[i]->data(Qt::DisplayRole).toString());
+    }
 }
 

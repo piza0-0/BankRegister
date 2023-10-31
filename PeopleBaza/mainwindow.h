@@ -23,7 +23,6 @@ protected:
 
 private slots:
 
-    void twItemSelection(QTableWidgetItem*);
     void on_pb_select_clicked();
 
     void on_pb_test_clicked();
@@ -31,6 +30,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QStringList m_bankList;
+    bool lengthCheck();
+
 };
 
 #endif // MAINWINDOW_H

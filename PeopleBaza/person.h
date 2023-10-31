@@ -24,9 +24,8 @@ public:
     const QString &getPhone() const;
 
 
-    const QList<QListWidgetItem *> &personBanks() const;
 
-
+    const QStringList &personBanks() const;
 
 private:
     //personal information (input)
@@ -35,7 +34,9 @@ private:
     QString m_patronymic;
     QString m_age;
     QString m_phone;
-    QList<QListWidgetItem*> m_personBanks;
+    QStringList m_personBanks;
+
+    void overwriteBankList(QList <QListWidgetItem*> personBanks);
 
 };
 
