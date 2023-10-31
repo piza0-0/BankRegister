@@ -17,9 +17,8 @@ public:
     void setCurrentPatronymic();
     void setCurrentAge();
     void setCurrentPhone();
-    const QList <QListWidgetItem*> &getPersonBanks();
-    const Person *pPersonTableItem() const;
 
+    const QStringList &getPersonBanks() const;
 
 
 private:
