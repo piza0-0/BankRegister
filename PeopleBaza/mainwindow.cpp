@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QRegExpValidator>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +11,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tw_personList->setColumnCount(5);
     ui->tw_personList->setHorizontalHeaderLabels({"Фамилия","Имя","Отчество", "Возраст", "Номер"});
     ui->tw_personList->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    QRegExpValidator *validator = new QRegExpValidator(QRegExp("[А-Яа-я]{2,40}"));
+
+    ui->le_name->setValidator(validator);
+    ui->le_surname->setValidator(validator);
+    ui->le_patronymic->setValidator(validator);
+    ui->le_age->setInputMask("000");
+    ui->le_phone->setInputMask("+7(999)999-9999");
+
     ui->tw_personList->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tw_personList->setSelectionMode(QAbstractItemView::SingleSelection);
 
@@ -17,8 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
             [=](QTableWidgetItem* itemSelected)
     {    ui->lw_bankList->clear();
         PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>(itemSelected);
-        ui->lw_bankList->addItems(personItem->getPersonBanks());
-    });
+        ui->lw_bankList->addItems(personItem->getPersonBanks());});
 
 
     ui->le_surname->setFocus();
@@ -54,6 +63,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pb_select_clicked()
 {
+    if(lengthCheck()) return;
 
     Person *pPerson = new Person (
                 ui->le_surname->text(),
@@ -119,5 +129,20 @@ void MainWindow::on_pb_test_clicked()
 
         on_pb_select_clicked();
     }
+}
+
+bool MainWindow::lengthCheck()
+{
+    bool check = 0;
+    if(ui->le_name->text().count()<=2 || ui->le_surname->text().count()<=2
+            || ui->le_patronymic->text().count()<=2)
+    {
+        if(ui->le_name->text().count()<=2) ui->le_name->setStyleSheet("color: red");
+        if(ui->le_surname->text().count()<=2) ui->le_surname->setStyleSheet("color: red");
+        if(ui->le_patronymic->text().count()<=2) ui->le_patronymic->setStyleSheet("color: red");
+        check = 1;
+    }
+
+    return check;
 }
 
