@@ -5,6 +5,8 @@
 #include <QKeyEvent>
 #include "person.h"
 #include "persontablewidgetitem.h"
+#include "personbuttonedit.h"
+#include "dialogpersonedit.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,10 +29,15 @@ private slots:
 
     void on_pb_test_clicked();
 
+    void createPersonEditDialog();
+
 private:
+
     Ui::MainWindow *ui;
     QStringList m_bankList;
     bool lengthCheck();
+    DialogPersonEdit* m_dialogEdit = nullptr;
+
 
 };
 

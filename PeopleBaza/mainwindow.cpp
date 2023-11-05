@@ -9,9 +9,19 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->tw_personList->setColumnCount(5);
-    ui->tw_personList->setHorizontalHeaderLabels({"Фамилия","Имя","Отчество", "Возраст", "Номер"});
-    ui->tw_personList->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tw_personList->setColumnCount(6);
+    ui->tw_personList->setHorizontalHeaderLabels({"Фамилия","Имя","Отчество", "Возраст", "Номер", " "});
+
+    ui->tw_personList->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Stretch);
+    ui->tw_personList->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
+    ui->tw_personList->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Stretch);
+    ui->tw_personList->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
+    ui->tw_personList->setColumnWidth(3,60);
+    ui->tw_personList->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
+    ui->tw_personList->setColumnWidth(4,125);
+    ui->tw_personList->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
+    ui->tw_personList->setColumnWidth(5,50);
+
 
     QRegExpValidator *validator = new QRegExpValidator(QRegExp("[А-Яа-я]{2,40}"));
 
@@ -45,14 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lw_checkBanks->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->lw_checkBanks->addItems(m_bankList);
 
-//    ui->lineEdit_name->setEnabled(false);
-//    ui->lineEdit_surname->setEnabled(false);
-//    ui->lineEdit_patronymic->setEnabled(false);
-//    ui->lineEdit_age->setEnabled(false);
-//    ui->lineEdit_phone->setEnabled(false);
 
-//    ui->pushButton_select->setEnabled(false);
-//    ui->pushButton_TEST->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -81,6 +84,9 @@ void MainWindow::on_pb_select_clicked()
     PersonTableWidgetItem *pPersonTableWidgetItemAge = new PersonTableWidgetItem(pPerson);
     PersonTableWidgetItem *pPersonTableWidgetItemPhone = new PersonTableWidgetItem(pPerson);
 
+    PersonButtonEdit *pButtonEdit = new PersonButtonEdit(pPerson);
+    pButtonEdit->setText("edit");
+
     int row = ui->tw_personList->rowCount();
     ui->tw_personList->insertRow(row);
 
@@ -95,6 +101,8 @@ void MainWindow::on_pb_select_clicked()
     ui->tw_personList->setItem(row,2, pPersonTableWidgetItemPatronymic);
     ui->tw_personList->setItem(row,3, pPersonTableWidgetItemAge);
     ui->tw_personList->setItem(row,4, pPersonTableWidgetItemPhone);
+
+    ui->tw_personList->setCellWidget(row,5,pButtonEdit);
 
     ui->lw_checkBanks->clearSelection();
     ui->le_name->clear();
@@ -132,6 +140,9 @@ void MainWindow::on_pb_test_clicked()
     }
 }
 
+
+//////////////////
+
 bool MainWindow::lengthCheck()
 {
     bool check = 0;
@@ -147,3 +158,14 @@ bool MainWindow::lengthCheck()
     return check;
 }
 
+void MainWindow::createPersonEditDialog()
+{
+    if(m_dialogEdit!= nullptr)
+    {
+        m_dialogEdit = new DialogPersonEdit(this);
+        m_dialogEdit->show();
+
+    }
+
+
+}
