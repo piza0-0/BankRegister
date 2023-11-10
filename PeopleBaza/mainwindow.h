@@ -30,6 +30,7 @@ private slots:
     void on_pb_test_clicked();
 
     void createPersonEditDialog();
+    //void buttonReact(int r, int c);
 
 private:
 
@@ -37,6 +38,7 @@ private:
     QStringList m_bankList;
     bool lengthCheck();
     DialogPersonEdit* m_dialogEdit = nullptr;
+
 
 
 };

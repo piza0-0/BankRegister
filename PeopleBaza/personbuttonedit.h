@@ -14,6 +14,7 @@ public:
 
 private:
     Person* m_personButton;
+
 };
 
 #endif // PERSONBUTTONEDIT_H

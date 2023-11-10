@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tw_personList->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
     ui->tw_personList->setColumnWidth(5,50);
 
-
     QRegExpValidator *validator = new QRegExpValidator(QRegExp("[А-Яа-я]{2,40}"));
 
     ui->le_name->setValidator(validator);
@@ -40,7 +39,6 @@ MainWindow::MainWindow(QWidget *parent)
         PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>(itemSelected);
         ui->lw_bankList->addItems(personItem->getPersonBanks());});
 
-
     ui->le_surname->setFocus();
 
     QWidget::setTabOrder(ui->le_surname, ui->le_name);
@@ -55,7 +53,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lw_checkBanks->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->lw_checkBanks->addItems(m_bankList);
 
+    //connect(dynamic_cast<PersonButtonEdit*> (ui->tw_personList->cellWidget(ui->tw_personList->currentRow(),5)),
+           // &QPushButton::clicked, this, &MainWindow::createPersonEditDialog);
 
+    //connect(ui->tw_personList, &QTableWidget::itemClicked, this, &MainWindow::buttonReact);
 }
 
 MainWindow::~MainWindow()
@@ -86,6 +87,7 @@ void MainWindow::on_pb_select_clicked()
 
     PersonButtonEdit *pButtonEdit = new PersonButtonEdit(pPerson);
     pButtonEdit->setText("edit");
+    connect(pButtonEdit, &QPushButton::clicked, this, &MainWindow::createPersonEditDialog);
 
     int row = ui->tw_personList->rowCount();
     ui->tw_personList->insertRow(row);
@@ -160,12 +162,17 @@ bool MainWindow::lengthCheck()
 
 void MainWindow::createPersonEditDialog()
 {
-    if(m_dialogEdit!= nullptr)
-    {
-        m_dialogEdit = new DialogPersonEdit(this);
-        m_dialogEdit->show();
 
-    }
+
+    m_dialogEdit = new DialogPersonEdit(this);
+    m_dialogEdit->setModal(true);
+    m_dialogEdit->show();
+    connect(m_dialogEdit, &QDialog::finished,[=](int result)
+    {
+        Q_UNUSED(result);
+        m_dialogEdit = nullptr;
+    });
+
 
 
 }
