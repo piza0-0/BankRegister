@@ -162,16 +162,23 @@ bool MainWindow::lengthCheck()
 
 void MainWindow::createPersonEditDialog()
 {
-
-
-    m_dialogEdit = new DialogPersonEdit(this);
-    m_dialogEdit->setModal(true);
-    m_dialogEdit->show();
-    connect(m_dialogEdit, &QDialog::finished,[=](int result)
+    QObject *senderObj = sender();
+    if (senderObj!=nullptr)
     {
-        Q_UNUSED(result);
-        m_dialogEdit = nullptr;
-    });
+        PersonButtonEdit *pButtonEdit = dynamic_cast<PersonButtonEdit*>(senderObj);
+
+        m_dialogEdit = new DialogPersonEdit(this);
+        m_dialogEdit->setModal(true);
+        m_dialogEdit->setPersonInfo(pButtonEdit->personButton());
+
+        connect(m_dialogEdit, &QDialog::finished,[=](int result)
+
+        {
+            Q_UNUSED(result);
+            m_dialogEdit = nullptr;
+        });
+        m_dialogEdit->exec();
+    }
 
 
 

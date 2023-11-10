@@ -10,7 +10,7 @@ class PersonButtonEdit : public QPushButton
     Q_OBJECT
 public:
     PersonButtonEdit(Person* );
-    Person *personButton() const;
+    const Person *personButton() const;
 
 private:
     Person* m_personButton;

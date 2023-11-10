@@ -17,7 +17,7 @@ public:
     explicit DialogPersonEdit(QWidget *parent = nullptr);
     ~DialogPersonEdit();
 
-    void fillFields(Person*);
+    void setPersonInfo(const Person* person);
 
 private:
     Ui::DialogPersonEdit *ui;

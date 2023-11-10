@@ -13,12 +13,13 @@ DialogPersonEdit::~DialogPersonEdit()
     delete ui;
 }
 
-void DialogPersonEdit::fillFields(Person* personFill)
+
+void DialogPersonEdit::setPersonInfo(const Person *person)
 {
-    ui->le_dsurname->setText(personFill->getSurname());
-    ui->le_dname->setText(personFill->getName());
-    ui->le_dpatronymic->setText(personFill->getPatronymic());
-    ui->le_dage->setText(personFill->getAge());
-    ui->le_dphone->setText(personFill->getPhone());
+    ui->le_dsurname->setText(person->getSurname());
+    ui->le_dname->setText(person->getName());
+    ui->le_dpatronymic->setText(person->getPatronymic());
+    ui->le_dage->setText(person->getAge());
+    ui->le_dphone->setText(person->getPhone());
 }
 
