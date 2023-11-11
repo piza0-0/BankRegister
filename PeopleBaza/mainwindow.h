@@ -31,12 +31,16 @@ private slots:
 
     void createPersonEditDialog();
 
+    void setEditPerson(const QString &surname, const QString &name, const QString &patronymic,
+                       const QString &age, const QString &phone, int row);
+
 private:
 
     Ui::MainWindow *ui;
     QStringList m_bankList;
     bool lengthCheck();
     DialogPersonEdit* m_dialogEdit = nullptr;
+
 
 
 };

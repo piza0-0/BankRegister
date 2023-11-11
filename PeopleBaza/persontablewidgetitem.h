@@ -21,6 +21,8 @@ public:
     const QStringList &getPersonBanks() const;
 
 
+    Person *pPersonTableItem() const;
+
 private:
     Person* m_pPersonTableItem;
 };

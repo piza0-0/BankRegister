@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tw_personList->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
     ui->tw_personList->setColumnWidth(5,50);
 
-
     QRegExpValidator *validator = new QRegExpValidator(QRegExp("[А-Яа-я]{2,40}"));
 
     ui->le_name->setValidator(validator);
@@ -40,7 +39,6 @@ MainWindow::MainWindow(QWidget *parent)
         PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>(itemSelected);
         ui->lw_bankList->addItems(personItem->getPersonBanks());});
 
-
     ui->le_surname->setFocus();
 
     QWidget::setTabOrder(ui->le_surname, ui->le_name);
@@ -55,7 +53,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lw_checkBanks->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->lw_checkBanks->addItems(m_bankList);
 
+    //connect(dynamic_cast<PersonButtonEdit*> (ui->tw_personList->cellWidget(ui->tw_personList->currentRow(),5)),
+           // &QPushButton::clicked, this, &MainWindow::createPersonEditDialog);
 
+    //connect(ui->tw_personList, &QTableWidget::itemClicked, this, &MainWindow::buttonReact);
 }
 
 MainWindow::~MainWindow()
@@ -86,6 +87,7 @@ void MainWindow::on_pb_select_clicked()
 
     PersonButtonEdit *pButtonEdit = new PersonButtonEdit(pPerson);
     pButtonEdit->setText("edit");
+    connect(pButtonEdit, &QPushButton::clicked, this, &MainWindow::createPersonEditDialog);
 
     int row = ui->tw_personList->rowCount();
     ui->tw_personList->insertRow(row);
@@ -103,6 +105,7 @@ void MainWindow::on_pb_select_clicked()
     ui->tw_personList->setItem(row,4, pPersonTableWidgetItemPhone);
 
     ui->tw_personList->setCellWidget(row,5,pButtonEdit);
+    pButtonEdit->setCurrentRowButton(row);
 
     ui->lw_checkBanks->clearSelection();
     ui->le_name->clear();
@@ -160,12 +163,65 @@ bool MainWindow::lengthCheck()
 
 void MainWindow::createPersonEditDialog()
 {
-    if(m_dialogEdit!= nullptr)
+    QObject *senderObj = sender();
+    if (senderObj!=nullptr)
     {
+        PersonButtonEdit *pButtonEdit = dynamic_cast<PersonButtonEdit*>(senderObj);
+
         m_dialogEdit = new DialogPersonEdit(this);
-        m_dialogEdit->show();
-
+        m_dialogEdit->setModal(true);
+        m_dialogEdit->setPersonInfo(pButtonEdit->personButton());
+        m_dialogEdit->setCurrentRowDialog(pButtonEdit->currentRow());
+        connect(m_dialogEdit, &DialogPersonEdit::sendEditPerson, this, &MainWindow::setEditPerson);
+        m_dialogEdit->exec();
     }
+}
 
+void MainWindow::setEditPerson(const QString &surname, const QString &name, const QString &patronymic,
+                               const QString &age, const QString &phone, int row)
+{
+
+    PersonTableWidgetItem* activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 0));
+    if(activePerson->pPersonTableItem()->getSurname() != surname)
+    {
+        activePerson->pPersonTableItem()->setSurname(surname);
+        activePerson->setText(surname);
+    }
+    activePerson = nullptr;
+
+    activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 1));
+    if(activePerson->pPersonTableItem()->getName() != name)
+    {
+        activePerson->pPersonTableItem()->setName(name);
+        activePerson->setText(name);
+    }
+    activePerson = nullptr;
+
+    activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 2));
+    if(activePerson->pPersonTableItem()->getPatronymic() != patronymic)
+    {
+        activePerson->pPersonTableItem()->setPatronymic(patronymic);
+        activePerson->setText(patronymic);
+    }
+    activePerson = nullptr;
+
+    activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 3));
+    if(activePerson->pPersonTableItem()->getAge() != age)
+    {
+        activePerson->pPersonTableItem()->setAge(age);
+        activePerson->setText(age);
+    }
+    activePerson = nullptr;
+
+    activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 4));
+    if(activePerson->pPersonTableItem()->getPhone() != phone)
+    {
+        activePerson->pPersonTableItem()->setPhone(phone);
+        activePerson->setText(phone);
+    }
+    activePerson = nullptr;
+
+    m_dialogEdit->close();
+    m_dialogEdit = nullptr;
 
 }

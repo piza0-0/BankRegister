@@ -27,6 +27,12 @@ public:
 
     const QStringList &personBanks() const;
 
+    void setName(const QString &newName);
+    void setSurname(const QString &newSurname);
+    void setPatronymic(const QString &newPatronymic);
+    void setAge(const QString &newAge);
+    void setPhone(const QString &newPhone);
+
 private:
     //personal information (input)
     QString m_name;

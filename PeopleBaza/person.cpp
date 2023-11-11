@@ -49,6 +49,31 @@ const QStringList &Person::personBanks() const
     return m_personBanks;
 }
 
+void Person::setName (const QString &newName)
+{
+    m_name = newName;
+}
+
+void Person::setSurname (const QString &newSurname)
+{
+    m_surname = newSurname;
+}
+
+void Person::setPatronymic(const QString &newPatronymic)
+{
+    m_patronymic = newPatronymic;
+}
+
+void Person::setAge(const QString &newAge)
+{
+    m_age = newAge;
+}
+
+void Person::setPhone(const QString &newPhone)
+{
+    m_phone = newPhone;
+}
+
 
 void Person::overwriteBankList(QList <QListWidgetItem*> personBanks)
 {
