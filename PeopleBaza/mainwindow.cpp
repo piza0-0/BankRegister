@@ -105,6 +105,7 @@ void MainWindow::on_pb_select_clicked()
     ui->tw_personList->setItem(row,4, pPersonTableWidgetItemPhone);
 
     ui->tw_personList->setCellWidget(row,5,pButtonEdit);
+    pButtonEdit->setCurrentRowButton(row);
 
     ui->lw_checkBanks->clearSelection();
     ui->le_name->clear();
@@ -170,16 +171,57 @@ void MainWindow::createPersonEditDialog()
         m_dialogEdit = new DialogPersonEdit(this);
         m_dialogEdit->setModal(true);
         m_dialogEdit->setPersonInfo(pButtonEdit->personButton());
-
-        connect(m_dialogEdit, &QDialog::finished,[=](int result)
-
-        {
-            Q_UNUSED(result);
-            m_dialogEdit = nullptr;
-        });
+        m_dialogEdit->setCurrentRowDialog(pButtonEdit->currentRow());
+        connect(m_dialogEdit, &DialogPersonEdit::sendEditPerson, this, &MainWindow::setEditPerson);
         m_dialogEdit->exec();
     }
+}
 
+void MainWindow::setEditPerson(const QString &surname, const QString &name, const QString &patronymic,
+                               const QString &age, const QString &phone, int row)
+{
 
+    PersonTableWidgetItem* activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 0));
+    if(activePerson->pPersonTableItem()->getSurname() != surname)
+    {
+        activePerson->pPersonTableItem()->setSurname(surname);
+        activePerson->setText(surname);
+    }
+    activePerson = nullptr;
+
+    activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 1));
+    if(activePerson->pPersonTableItem()->getName() != name)
+    {
+        activePerson->pPersonTableItem()->setName(name);
+        activePerson->setText(name);
+    }
+    activePerson = nullptr;
+
+    activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 2));
+    if(activePerson->pPersonTableItem()->getPatronymic() != patronymic)
+    {
+        activePerson->pPersonTableItem()->setPatronymic(patronymic);
+        activePerson->setText(patronymic);
+    }
+    activePerson = nullptr;
+
+    activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 3));
+    if(activePerson->pPersonTableItem()->getAge() != age)
+    {
+        activePerson->pPersonTableItem()->setAge(age);
+        activePerson->setText(age);
+    }
+    activePerson = nullptr;
+
+    activePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 4));
+    if(activePerson->pPersonTableItem()->getPhone() != phone)
+    {
+        activePerson->pPersonTableItem()->setPhone(phone);
+        activePerson->setText(phone);
+    }
+    activePerson = nullptr;
+
+    m_dialogEdit->close();
+    m_dialogEdit = nullptr;
 
 }

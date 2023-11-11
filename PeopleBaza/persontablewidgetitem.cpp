@@ -42,3 +42,8 @@ const QStringList &PersonTableWidgetItem::getPersonBanks() const
     return m_pPersonTableItem->personBanks();
 }
 
+Person *PersonTableWidgetItem::pPersonTableItem() const
+{
+    return m_pPersonTableItem;
+}
+

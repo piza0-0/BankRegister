@@ -12,8 +12,12 @@ public:
     PersonButtonEdit(Person* );
     const Person *personButton() const;
 
+    int currentRow() const;
+    void setCurrentRowButton (int currentRow);
+
 private:
     Person* m_personButton;
+    int m_currentRow;
 
 };
 

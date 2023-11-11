@@ -30,7 +30,9 @@ private slots:
     void on_pb_test_clicked();
 
     void createPersonEditDialog();
-    //void buttonReact(int r, int c);
+
+    void setEditPerson(const QString &surname, const QString &name, const QString &patronymic,
+                       const QString &age, const QString &phone, int row);
 
 private:
 
