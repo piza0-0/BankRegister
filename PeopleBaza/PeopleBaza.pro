@@ -17,7 +17,7 @@ SOURCES += \
     persontablewidgetitem.cpp
 
 HEADERS += \
-    dialogpersonedit.h \
+    dialogpersonedit.h \ # DialogPersonEdit.h
     mainwindow.h \
     person.h \
     personbuttonedit.h \

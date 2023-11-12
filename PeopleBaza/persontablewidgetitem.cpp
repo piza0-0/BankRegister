@@ -3,7 +3,7 @@
 
 PersonTableWidgetItem::PersonTableWidgetItem(Person* newPerson)
 {
-    m_pPersonTableItem = newPerson;
+    m_pPerson = newPerson;
 }
 
 // 3 items -- 1 person
@@ -18,32 +18,32 @@ PersonTableWidgetItem::~PersonTableWidgetItem() {
 
 void PersonTableWidgetItem::setCurrentName()
 {
-    this->setText(m_pPersonTableItem->getName());
+    this->setText(m_pPerson->getName());
 }
 void PersonTableWidgetItem::setCurrentSurname()
 {
-    this->setText(m_pPersonTableItem->getSurname());
+    this->setText(m_pPerson->getSurname());
 }
 void PersonTableWidgetItem::setCurrentPatronymic()
 {
-    this->setText(m_pPersonTableItem->getPatronymic());
+    this->setText(m_pPerson->getPatronymic());
 }
 void PersonTableWidgetItem::setCurrentAge()
 {
-    this->setText(m_pPersonTableItem->getAge());
+    this->setText(m_pPerson->getAge());
 }
 void PersonTableWidgetItem::setCurrentPhone()
 {
-    this->setText(m_pPersonTableItem->getPhone());
+    this->setText(m_pPerson->getPhone());
 }
 
 const QStringList &PersonTableWidgetItem::getPersonBanks() const
 {
-    return m_pPersonTableItem->personBanks();
+    return m_pPerson->personBanks();
 }
 
-Person *PersonTableWidgetItem::pPersonTableItem() const
+Person *PersonTableWidgetItem::pPerson() const
 {
-    return m_pPersonTableItem;
+    return m_pPerson;
 }
 

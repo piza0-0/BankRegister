@@ -14,7 +14,6 @@ DialogPersonEdit::~DialogPersonEdit()
     delete ui;
 }
 
-
 void DialogPersonEdit::setPersonInfo(const Person *person)
 {
     ui->le_dsurname->setText(person->getSurname());
@@ -24,9 +23,6 @@ void DialogPersonEdit::setPersonInfo(const Person *person)
     ui->le_dphone->setText(person->getPhone());
 }
 
-
-
-
 void DialogPersonEdit::on_pb_dsave_clicked()
 {
     m_surname = ui->le_dsurname->text();
@@ -34,7 +30,7 @@ void DialogPersonEdit::on_pb_dsave_clicked()
     m_patronymic = ui->le_dpatronymic->text();
     m_age = ui->le_dage->text();
     m_phone = ui->le_dphone->text();
-    emit sendEditPerson(m_surname, m_name, m_patronymic, m_age, m_phone, m_currentRow);
+    emit editPerson(m_surname, m_name, m_patronymic, m_age, m_phone, m_currentRow);
 
 }
 
