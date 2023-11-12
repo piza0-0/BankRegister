@@ -24,9 +24,9 @@ public:
     void setCurrentRowDialog (int newCurrentRow);
 
 signals:
-    void sendEditPerson(const QString &surname, const QString &name,
-                        const QString &patronymic, const QString &age,
-                        const QString &phone,int row);
+    void editPerson(const QString &surname, const QString &name,
+                    const QString &patronymic, const QString &age,
+                    const QString &phone,int row);
 
 private slots:
     void on_pb_dsave_clicked();

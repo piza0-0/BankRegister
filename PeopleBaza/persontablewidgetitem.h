@@ -20,11 +20,10 @@ public:
 
     const QStringList &getPersonBanks() const;
 
-
-    Person *pPersonTableItem() const;
+    Person *pPerson() const;
 
 private:
-    Person* m_pPersonTableItem;
+    Person* m_pPerson; // 6 колонок, 8 байт * 6 = 48 байт вместо 8 байт если мы храним только в первой ячейке строки
 };
 
 #endif // PERSONTABLEWIDGETITEM_H
