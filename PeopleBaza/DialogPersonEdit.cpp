@@ -1,11 +1,12 @@
 #include "DialogPersonEdit.h"
-#include "ui_dialogpersonedit.h"
+#include "ui_DialogPersonEdit.h"
 
 DialogPersonEdit::DialogPersonEdit(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogPersonEdit)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Редактирование пользователей");
     ui->le_dphone->setInputMask("+7(999)999-9999");
 }
 
