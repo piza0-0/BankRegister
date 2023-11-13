@@ -1,4 +1,4 @@
-#include "persontablewidgetitem.h"
+#include "PersonTableWidgetItem.h"
 #include <QDebug>
 
 PersonTableWidgetItem::PersonTableWidgetItem(Person* newPerson)

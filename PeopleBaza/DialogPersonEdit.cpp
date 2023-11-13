@@ -1,4 +1,4 @@
-#include "dialogpersonedit.h"
+#include "DialogPersonEdit.h"
 #include "ui_dialogpersonedit.h"
 
 DialogPersonEdit::DialogPersonEdit(QWidget *parent) :

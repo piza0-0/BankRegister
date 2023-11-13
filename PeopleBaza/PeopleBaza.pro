@@ -9,23 +9,24 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dialogpersonedit.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    person.cpp \
-    personbuttonedit.cpp \
-    persontablewidgetitem.cpp
+    DialogPersonEdit.cpp \
+    MainWindow.cpp \
+    Person.cpp \
+    PersonButtonEdit.cpp \
+    PersonTableWidgetItem.cpp \
+    main.cpp
 
 HEADERS += \
-    dialogpersonedit.h \ # DialogPersonEdit.h
-    mainwindow.h \
-    person.h \
-    personbuttonedit.h \
-    persontablewidgetitem.h
+    DialogPersonEdit.h \
+    MainWindow.h \
+    Person.h \
+    PersonButtonEdit.h \
+    PersonTableWidgetItem.h
+     # dialogpersonedit.h # DialogPersonEdit.h
 
 FORMS += \
-    dialogpersonedit.ui \
-    mainwindow.ui
+    DialogPersonEdit.ui \
+    MainWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

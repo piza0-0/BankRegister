@@ -3,7 +3,7 @@
 
 #include <QPushButton>
 #include <QObject>
-#include "person.h"
+#include "Person.h"
 
 class PersonButtonEdit : public QPushButton
 {

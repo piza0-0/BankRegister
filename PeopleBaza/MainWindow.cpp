@@ -1,5 +1,5 @@
 
-#include "mainwindow.h"
+#include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QRegExpValidator>

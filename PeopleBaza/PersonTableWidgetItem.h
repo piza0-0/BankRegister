@@ -2,7 +2,7 @@
 #define PERSONTABLEWIDGETITEM_H
 
 #include <QTableWidgetItem>
-#include "person.h"
+#include "Person.h"
 
 
 

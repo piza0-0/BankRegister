@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QString>
 
-#include "person.h"
+#include "Person.h"
 
 namespace Ui {
 class DialogPersonEdit;

@@ -3,10 +3,10 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
-#include "person.h"
-#include "persontablewidgetitem.h"
-#include "personbuttonedit.h"
-#include "dialogpersonedit.h"
+#include "Person.h"
+#include "PersonTableWidgetItem.h"
+#include "PersonButtonEdit.h"
+#include "DialogPersonEdit.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

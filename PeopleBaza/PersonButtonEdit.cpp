@@ -1,4 +1,4 @@
-#include "personbuttonedit.h"
+#include "PersonButtonEdit.h"
 
 PersonButtonEdit::PersonButtonEdit(Person* person)
 {
