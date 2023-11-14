@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QString>
+#include <QMessageBox>
 
 #include "Person.h"
 
@@ -30,6 +31,8 @@ signals:
 
 private slots:
     void on_pb_dsave_clicked();
+
+    void on_pb_ddiscard_clicked();
 
 private:
     Ui::DialogPersonEdit *ui;

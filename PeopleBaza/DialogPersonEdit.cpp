@@ -40,3 +40,14 @@ void DialogPersonEdit::setCurrentRowDialog(int newCurrentRow)
     m_currentRow = newCurrentRow;
 }
 
+
+void DialogPersonEdit::on_pb_ddiscard_clicked()
+{
+    int result = QMessageBox::question(this, "Внимание", "Вы точно хотите закрыть окно?"
+                                            " Все внесенные изменения не будут сохранены",
+                          QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+    if(result == QMessageBox::Ok){
+        this->close();
+    }
+}
+
