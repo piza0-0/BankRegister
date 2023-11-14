@@ -35,12 +35,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tw_personList->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tw_personList->setSelectionMode(QAbstractItemView::SingleSelection);
 
-    connect(ui->tw_personList, &QTableWidget::itemClicked,
-            [=](QTableWidgetItem* itemSelected) {
-            PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>
-                    (ui->tw_personList->item(itemSelected->row(),1));
-            ui->lw_bankList->addItems(personItem->getPersonBanks());
-            ui->lw_bankList->clear();
+    connect(ui->tw_personList, &QTableWidget::cellClicked,
+            [=](int row, int coll) {
+                if (coll !=5){
+                    ui->lw_bankList->clear();
+
+                    PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>
+                            (ui->tw_personList->item(row,0));
+                    ui->lw_bankList->addItems(personItem->getPersonBanks());
+                }
             }
     );
 
@@ -81,10 +84,12 @@ void MainWindow::on_pb_select_clicked()
                 this );
 
     PersonTableWidgetItem *pPersonTableWidgetItemSurname = new PersonTableWidgetItem(pPerson);
-    PersonTableWidgetItem *pPersonTableWidgetItemName = new PersonTableWidgetItem(pPerson);
-    PersonTableWidgetItem *pPersonTableWidgetItemPatronymic = new PersonTableWidgetItem(pPerson);
-    PersonTableWidgetItem *pPersonTableWidgetItemAge = new PersonTableWidgetItem(pPerson);
-    PersonTableWidgetItem *pPersonTableWidgetItemPhone = new PersonTableWidgetItem(pPerson);
+
+    QTableWidgetItem *pPersonItemName = new QTableWidgetItem;
+    QTableWidgetItem *pPersonItemPatronymic = new QTableWidgetItem;
+    QTableWidgetItem *pPersonItemAge = new QTableWidgetItem;
+    QTableWidgetItem *pPersonItemPhone = new QTableWidgetItem;
+
 
     PersonButtonEdit *pButtonEdit = new PersonButtonEdit(pPerson);
     pButtonEdit->setText("edit");
@@ -93,17 +98,17 @@ void MainWindow::on_pb_select_clicked()
     int row = ui->tw_personList->rowCount();
     ui->tw_personList->insertRow(row);
 
-    pPersonTableWidgetItemName->setCurrentName();
-    pPersonTableWidgetItemSurname->setCurrentSurname();
-    pPersonTableWidgetItemPatronymic->setCurrentPatronymic();
-    pPersonTableWidgetItemAge->setCurrentAge();
-    pPersonTableWidgetItemPhone->setCurrentPhone();
+   pPersonTableWidgetItemSurname->setCurrentSurname();
+    pPersonItemName->setText(pPerson->getName());
+    pPersonItemPatronymic->setText(pPerson->getPatronymic());
+    pPersonItemAge->setText(pPerson->getAge());
+    pPersonItemPhone->setText(pPerson->getPhone());
 
     ui->tw_personList->setItem(row,0, pPersonTableWidgetItemSurname);
-    ui->tw_personList->setItem(row,1, pPersonTableWidgetItemName);
-    ui->tw_personList->setItem(row,2, pPersonTableWidgetItemPatronymic);
-    ui->tw_personList->setItem(row,3, pPersonTableWidgetItemAge);
-    ui->tw_personList->setItem(row,4, pPersonTableWidgetItemPhone);
+    ui->tw_personList->setItem(row,1, pPersonItemName);
+    ui->tw_personList->setItem(row,2, pPersonItemPatronymic);
+    ui->tw_personList->setItem(row,3, pPersonItemAge);
+    ui->tw_personList->setItem(row,4, pPersonItemPhone);
 
     ui->tw_personList->setCellWidget(row,5,pButtonEdit);
     pButtonEdit->setCurrentRowButton(row);
@@ -172,51 +177,19 @@ void MainWindow::createPersonEditDialog() {
 
 void MainWindow::onEditPerson(const QString &surname, const QString &name, const QString &patronymic,
                               const QString &age, const QString &phone, int row) {
-    // Нужно хранить указатель на персона только в нулевой ячейке строки персона
-    // Person
-    // PersonTableWidgetItem
-    // Переменная: activePerson
     PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 0));
-    //if(activePerson->pPersonTableItem()->getSurname() != surname)
-    //{
-        personTableItem->pPerson()->setSurname(surname);
-        personTableItem->setText(surname);
-    //}
-    //activePerson = nullptr;
+    personTableItem->pPerson()->setSurname(surname);
+    personTableItem->pPerson()->setName(name);
+    personTableItem->pPerson()->setPatronymic(patronymic);
+    personTableItem->pPerson()->setAge(age);
+    personTableItem->pPerson()->setPhone(phone);
 
-    personTableItem = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 1));
-    //if(activePerson->pPersonTableItem()->getName() != name)
-    //{
-        personTableItem->pPerson()->setName(name);
-        personTableItem->setText(name);
-    //}
-    //activePerson = nullptr;
-
-    personTableItem = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 2));
-    //if(activePerson->pPersonTableItem()->getPatronymic() != patronymic)
-    //{
-        personTableItem->pPerson()->setPatronymic(patronymic);
-        personTableItem->setText(patronymic);
-    //}
-//    activePerson = nullptr;
-
-    personTableItem = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 3));
-//    if(activePerson->pPersonTableItem()->getAge() != age)
-//    {
-        personTableItem->pPerson()->setAge(age);
-        personTableItem->setText(age);
-//    }
-//    activePerson = nullptr;
-
-    personTableItem = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 4));
-//    if(activePerson->pPersonTableItem()->getPhone() != phone)
-//    {
-        personTableItem->pPerson()->setPhone(phone);
-        personTableItem->setText(phone);
-//    }
-//    activePerson = nullptr;
+    personTableItem->setText(surname);
+    ui->tw_personList->item(row,1)->setText(name);
+    ui->tw_personList->item(row,2)->setText(patronymic);
+    ui->tw_personList->item(row,3)->setText(age);
+    ui->tw_personList->item(row,4)->setText(phone);
 
     m_dialogEdit->close();
     m_dialogEdit = nullptr;
-
 }

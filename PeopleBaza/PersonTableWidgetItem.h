@@ -14,9 +14,9 @@ public:
 
     void setCurrentName();
     void setCurrentSurname();
-    void setCurrentPatronymic();
-    void setCurrentAge();
-    void setCurrentPhone();
+//    void setCurrentPatronymic();
+//    void setCurrentAge();
+//    void setCurrentPhone();
 
     const QStringList &getPersonBanks() const;
 
