@@ -37,9 +37,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->tw_personList, &QTableWidget::itemClicked,
             [=](QTableWidgetItem* itemSelected) {
-                ui->lw_bankList->clear();
-                PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>(itemSelected);
-                ui->lw_bankList->addItems(personItem->getPersonBanks());
+            PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>
+                    (ui->tw_personList->item(itemSelected->row(),1));
+            ui->lw_bankList->addItems(personItem->getPersonBanks());
+            ui->lw_bankList->clear();
             }
     );
 
@@ -56,12 +57,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_bankList.sort();
     ui->lw_checkBanks->setSelectionMode(QAbstractItemView::MultiSelection);
     ui->lw_checkBanks->addItems(m_bankList);
-
-    //connect(dynamic_cast<PersonButtonEdit*> (ui->tw_personList->cellWidget(ui->tw_personList->currentRow(),5)),
-           // &QPushButton::clicked, this, &MainWindow::createPersonEditDialog);
-
-    //connect(ui->tw_personList, &QTableWidget::itemClicked, this, &MainWindow::buttonReact);
 }
+
 
 MainWindow::~MainWindow()
 {
