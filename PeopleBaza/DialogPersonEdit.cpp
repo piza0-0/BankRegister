@@ -27,17 +27,17 @@ void DialogPersonEdit::setPersonInfo(const Person *person, const QStringList &ba
     ui->lw_personBanks->addItems(bankList);
 
     int counter = 0;
+
     for (QString personBank : person->personBanks())
     {
-        for(QString bank : bankList)
+        for(int i = counter; i < bankList.size(); ++i)
         {
-            if (personBank == bank)
+            if (personBank == bankList.at(i))
             {
-                ui->lw_personBanks->item(counter)->setSelected(true);
-                counter = 0;
+                ui->lw_personBanks->item(i)->setSelected(true);
+                counter = i+1;
                 break;
-            }
-            ++counter;
+            }            
         }
     }
 }
