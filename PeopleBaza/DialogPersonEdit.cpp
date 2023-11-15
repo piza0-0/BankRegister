@@ -8,6 +8,8 @@ DialogPersonEdit::DialogPersonEdit(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("Редактирование пользователей");
     ui->le_dphone->setInputMask("+7(999)999-9999");
+
+    ui->lw_personBanks->setSelectionMode(QAbstractItemView::MultiSelection);
 }
 
 DialogPersonEdit::~DialogPersonEdit()
@@ -15,13 +17,29 @@ DialogPersonEdit::~DialogPersonEdit()
     delete ui;
 }
 
-void DialogPersonEdit::setPersonInfo(const Person *person)
+void DialogPersonEdit::setPersonInfo(const Person *person, const QStringList &bankList)
 {
     ui->le_dsurname->setText(person->getSurname());
     ui->le_dname->setText(person->getName());
     ui->le_dpatronymic->setText(person->getPatronymic());
     ui->le_dage->setText(person->getAge());
     ui->le_dphone->setText(person->getPhone());
+    ui->lw_personBanks->addItems(bankList);
+
+    int counter = 0;
+    for (QString personBank : person->personBanks())
+    {
+        for(QString bank : bankList)
+        {
+            if (personBank == bank)
+            {
+                ui->lw_personBanks->item(counter)->setSelected(true);
+                counter = 0;
+                break;
+            }
+            ++counter;
+        }
+    }
 }
 
 void DialogPersonEdit::on_pb_dsave_clicked()

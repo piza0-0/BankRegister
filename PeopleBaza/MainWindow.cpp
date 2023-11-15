@@ -167,7 +167,8 @@ void MainWindow::createPersonEditDialog() {
 
         m_dialogEdit = new DialogPersonEdit(this);
         m_dialogEdit->setModal(true);
-        m_dialogEdit->setPersonInfo(pButtonEdit->personButton());
+        m_dialogEdit->setPersonInfo(pButtonEdit->personButton(), m_bankList);
+
         m_dialogEdit->setCurrentRowDialog(pButtonEdit->currentRow());
         connect(m_dialogEdit, &DialogPersonEdit::editPerson, this, &MainWindow::onEditPerson);
         m_dialogEdit->exec();

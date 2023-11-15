@@ -19,8 +19,7 @@ public:
     explicit DialogPersonEdit(QWidget *parent = nullptr);
     ~DialogPersonEdit();
 
-    void setPersonInfo(const Person* person);
-
+    void setPersonInfo(const Person* person, const QStringList &bankList);
 
     void setCurrentRowDialog (int newCurrentRow);
 
