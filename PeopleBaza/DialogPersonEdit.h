@@ -41,9 +41,6 @@ private:
     QString m_patronymic;
     QString m_age;
     QString m_phone;
-
-    int m_currentRow;
-
 };
 
 #endif // DIALOGPERSONEDIT_H

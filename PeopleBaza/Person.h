@@ -41,8 +41,6 @@ private:
     QString m_phone;
     QStringList m_personBanks;
 
-
-
 };
 
 #endif // PERSON_H
