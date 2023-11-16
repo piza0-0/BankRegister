@@ -11,8 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setWindowTitle("Клиентская база");
 
-    ui->tw_personList->setColumnCount(6);
-    ui->tw_personList->setHorizontalHeaderLabels({"Фамилия","Имя","Отчество", "Возраст", "Номер", " "});
+    ui->tw_personList->setColumnCount(7);
+    ui->tw_personList->setHorizontalHeaderLabels({"Фамилия","Имя","Отчество", "Возраст",
+                                                  "Номер", " ", " "});
 
     ui->tw_personList->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Stretch);
     ui->tw_personList->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Stretch);
@@ -23,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tw_personList->setColumnWidth(4,125);
     ui->tw_personList->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
     ui->tw_personList->setColumnWidth(5,50);
+    ui->tw_personList->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
+    ui->tw_personList->setColumnWidth(6,50);
 
     QRegExpValidator *validator = new QRegExpValidator(QRegExp("[А-Яа-я]{2,40}"));
 
@@ -95,10 +98,14 @@ void MainWindow::on_pb_select_clicked()
     pButtonEdit->setText("edit");
     connect(pButtonEdit, &QPushButton::clicked, this, &MainWindow::createPersonEditDialog);
 
+    PersonButtonEdit *pButtonDelete = new PersonButtonEdit();
+    pButtonDelete->setText("delete");
+    connect(pButtonDelete, &QPushButton::clicked, this, &MainWindow::deletePerson);
+
     int row = ui->tw_personList->rowCount();
     ui->tw_personList->insertRow(row);
 
-   pPersonTableWidgetItemSurname->setCurrentSurname();
+    pPersonTableWidgetItemSurname->setCurrentSurname();
     pPersonItemName->setText(pPerson->getName());
     pPersonItemPatronymic->setText(pPerson->getPatronymic());
     pPersonItemAge->setText(pPerson->getAge());
@@ -112,6 +119,8 @@ void MainWindow::on_pb_select_clicked()
 
     ui->tw_personList->setCellWidget(row,5,pButtonEdit);
     pButtonEdit->setCurrentRowButton(row);
+    ui->tw_personList->setCellWidget(row,6,pButtonDelete);
+    pButtonDelete->setCurrentRowButton(row);
 
     ui->lw_checkBanks->clearSelection();
     ui->le_name->clear();
@@ -177,20 +186,48 @@ void MainWindow::createPersonEditDialog() {
 
 
 void MainWindow::onEditPerson(const QString &surname, const QString &name, const QString &patronymic,
-                              const QString &age, const QString &phone, int row) {
+                              const QString &age, const QString &phone, int row,
+                              const QList<QListWidgetItem *> &editPesronBanks) {
     PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(row, 0));
     personTableItem->pPerson()->setSurname(surname);
     personTableItem->pPerson()->setName(name);
     personTableItem->pPerson()->setPatronymic(patronymic);
     personTableItem->pPerson()->setAge(age);
     personTableItem->pPerson()->setPhone(phone);
+    personTableItem->pPerson()->overwriteBankList(editPesronBanks);
 
     personTableItem->setText(surname);
     ui->tw_personList->item(row,1)->setText(name);
     ui->tw_personList->item(row,2)->setText(patronymic);
     ui->tw_personList->item(row,3)->setText(age);
     ui->tw_personList->item(row,4)->setText(phone);
+    ui->lw_bankList->clear();
+    ui->lw_bankList->addItems(personTableItem->getPersonBanks());
 
     m_dialogEdit->close();
     m_dialogEdit = nullptr;
+}
+
+void MainWindow::deletePerson()
+{
+    QObject *senderObj = sender();
+    if (senderObj!=nullptr){
+        PersonButtonEdit *pButtonDelete = dynamic_cast<PersonButtonEdit*>(senderObj);
+        int currentRow = pButtonDelete->currentRow();
+        if(ui->tw_personList->item(currentRow, 0) != nullptr){
+        PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
+                (ui->tw_personList->item(currentRow, 0));
+        delete personTableItem->pPerson();
+        delete personTableItem;
+        personTableItem = nullptr;
+        }
+        for (int i = 1; i < 5 ; ++i) {
+            delete ui->tw_personList->item(currentRow, i);
+        }
+        for (int i = 5; i < 7; ++i){
+            delete ui->tw_personList->cellWidget(currentRow, i);
+        }
+        ui->lw_bankList->clear();
+        ui->tw_personList->removeRow(currentRow);
+    }
 }

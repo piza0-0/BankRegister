@@ -49,7 +49,9 @@ void DialogPersonEdit::on_pb_dsave_clicked()
     m_patronymic = ui->le_dpatronymic->text();
     m_age = ui->le_dage->text();
     m_phone = ui->le_dphone->text();
-    emit editPerson(m_surname, m_name, m_patronymic, m_age, m_phone, m_currentRow);
+
+    emit editPerson(m_surname, m_name, m_patronymic, m_age, m_phone, m_currentRow,
+                    ui->lw_personBanks->selectedItems());
 
 }
 

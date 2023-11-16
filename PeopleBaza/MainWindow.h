@@ -32,7 +32,9 @@ private slots:
     void createPersonEditDialog();
 
     void onEditPerson(const QString &surname, const QString &name, const QString &patronymic,
-                       const QString &age, const QString &phone, int row);
+                      const QString &age, const QString &phone, int row,
+                      const QList<QListWidgetItem*> &);
+    void deletePerson();
 
 private:
     // ../PeopleBaza/image.png

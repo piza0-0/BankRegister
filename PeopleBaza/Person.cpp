@@ -77,6 +77,9 @@ void Person::setPhone(const QString &newPhone)
 
 void Person::overwriteBankList(QList <QListWidgetItem*> personBanks)
 {
+    if(!m_personBanks.isEmpty()){
+        m_personBanks.clear();
+    }
     for(int i = 0; i < personBanks.size(); ++i) {
         m_personBanks.append(personBanks[i]->data(Qt::DisplayRole).toString());
     }

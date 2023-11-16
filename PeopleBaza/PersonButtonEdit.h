@@ -10,6 +10,7 @@ class PersonButtonEdit : public QPushButton
     Q_OBJECT
 public:
     PersonButtonEdit(Person* );
+    PersonButtonEdit();
     const Person *personButton() const;
 
     int currentRow() const;

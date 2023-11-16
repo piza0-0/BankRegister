@@ -22,9 +22,6 @@ public:
     const QString &getPatronymic() const;
     const QString &getAge() const;
     const QString &getPhone() const;
-
-
-
     const QStringList &personBanks() const;
 
     void setName(const QString &newName);
@@ -32,6 +29,8 @@ public:
     void setPatronymic(const QString &newPatronymic);
     void setAge(const QString &newAge);
     void setPhone(const QString &newPhone);
+
+    void overwriteBankList(QList <QListWidgetItem*> personBanks);
 
 private:
     //personal information (input)
@@ -42,7 +41,7 @@ private:
     QString m_phone;
     QStringList m_personBanks;
 
-    void overwriteBankList(QList <QListWidgetItem*> personBanks);
+
 
 };
 

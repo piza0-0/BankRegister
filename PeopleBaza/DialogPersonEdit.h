@@ -26,7 +26,8 @@ public:
 signals:
     void editPerson(const QString &surname, const QString &name,
                     const QString &patronymic, const QString &age,
-                    const QString &phone,int row);
+                    const QString &phone,int row,
+                    const QList<QListWidgetItem*> &editPersonBanks);
 
 private slots:
     void on_pb_dsave_clicked();
