@@ -52,14 +52,14 @@
         <widget class="QLineEdit" name="le_dpatronymic"/>
        </item>
        <item row="3" column="0">
-        <widget class="QLabel" name="l_dage">
+        <widget class="QLabel" name="l_dpassport">
          <property name="text">
-          <string>Возраст</string>
+          <string>Паспорт</string>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLineEdit" name="le_dage"/>
+        <widget class="QLineEdit" name="le_dpassport"/>
        </item>
        <item row="4" column="0">
         <widget class="QLabel" name="l_dtelephone">

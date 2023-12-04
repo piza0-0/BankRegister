@@ -119,14 +119,14 @@
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QLabel" name="l_age">
+           <widget class="QLabel" name="l_passport">
             <property name="text">
-             <string>Возраст</string>
+             <string>Паспорт</string>
             </property>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="le_age">
+           <widget class="QLineEdit" name="le_passport">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>40</horstretch>

@@ -32,6 +32,9 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    int binarySearchSurname(const QString &surname, const QString &passport);
+    void deletePerson(const QString &oldSurname, const QString &oldPassport);
+
     ~MainWindow();
 
 protected:
@@ -46,8 +49,9 @@ private slots:
     void createPersonEditDialog();
 
     void onEditPerson(const QString &surname, const QString &name, const QString &patronymic,
-                      const QString &age, const QString &phone, int row,
-                      const QList<QListWidgetItem*> &);
+                      const QString &passport, const QString &phone,
+                      const QList<QListWidgetItem*> &,
+                      const QString &oldSurname, const QString &oldPassport);
 
     void deletePerson();
 

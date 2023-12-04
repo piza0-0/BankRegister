@@ -2,13 +2,13 @@
 #include <QDebug>
 
 
-Person::Person(QString surname, QString name, QString patronymic, QString age, QString phone,QList <QListWidgetItem*> personBanks,QObject *parent)
+Person::Person(QString surname, QString name, QString patronymic, QString passport, QString phone,QList <QListWidgetItem*> personBanks,QObject *parent)
     : QObject(parent)
 {
     this->m_name = name;
     this->m_surname = surname;
     this->m_patronymic = patronymic;
-    this->m_age = age;
+    this->m_passport = passport;
     this->m_phone = phone;
     overwriteBankList(personBanks);
 }
@@ -34,9 +34,9 @@ const QString &Person::getPatronymic() const
 }
 
 
-const QString &Person::getAge() const
+const QString &Person::getPassport() const
 {
-    return m_age;
+    return m_passport;
 }
 
 const QString &Person::getPhone() const
@@ -64,9 +64,9 @@ void Person::setPatronymic(const QString &newPatronymic)
     m_patronymic = newPatronymic;
 }
 
-void Person::setAge(const QString &newAge)
+void Person::setPassport(const QString &newPassport)
 {
-    m_age = newAge;
+    m_passport = newPassport;
 }
 
 void Person::setPhone(const QString &newPhone)
