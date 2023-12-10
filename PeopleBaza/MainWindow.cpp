@@ -121,9 +121,7 @@ void MainWindow::on_pb_select_clicked()
     ui->tw_personList->setItem(row,4, pPersonItemPhone);
 
     ui->tw_personList->setCellWidget(row,5,pButtonEdit);
-    //pButtonEdit->setCurrentRowButton(row);
     ui->tw_personList->setCellWidget(row,6,pButtonDelete);
-    //pButtonDelete->setCurrentRowButton(row);
     ui->tw_personList->sortByColumn(0,Qt::AscendingOrder);
 
     ui->lw_checkBanks->clearSelection();
@@ -146,11 +144,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 void MainWindow::on_pb_test_clicked() {
     for(int i = 0; i < 100; i++) {
         qDebug() << i;
-        ui->le_name->setText("TESTTESTTEST");
-        ui->le_surname->setText("TEST");
-        ui->le_patronymic->setText("sdasndajsd");
-        ui->le_passport->setText("4444444444");
-        ui->le_phone->setText("1111");
+        ui->le_name->setText("ТЕСТ");
+        ui->le_surname->setText("ТЕСТ");
+        ui->le_patronymic->setText("ТЕСТТЕСТ");
+        ui->le_passport->setText("4022689452");
+        ui->le_phone->setText("6994423338");
+        ui->lw_checkBanks->selectAll();
 
         on_pb_select_clicked();
     }
@@ -182,7 +181,6 @@ void MainWindow::createPersonEditDialog() {
         m_dialogEdit->setModal(true);
         m_dialogEdit->setPersonInfo(pButtonEdit->personButton(), m_bankList);
 
-        //m_dialogEdit->setCurrentRowDialog(pButtonEdit->currentRow());
         connect(m_dialogEdit, &DialogPersonEdit::editPerson, this, &MainWindow::onEditPerson);
         m_dialogEdit->exec();
     }
@@ -193,47 +191,28 @@ void MainWindow::onEditPerson(const QString &surname, const QString &name, const
                               const QString &passport, const QString &phone,
                               const QList<QListWidgetItem *> &editPesronBanks,
                               const QString &oldSurname, const QString &oldPassport) {
-    deletePerson(oldSurname, oldPassport);
-    Person *pPerson = new Person (surname, name, patronymic,
-                                  passport, phone, editPesronBanks, this);
-    PersonTableWidgetItem *pPersonTableWidgetItemSurname = new PersonTableWidgetItem(pPerson);
+    int currentRow = binarySearchSurname(oldSurname, oldPassport);
+    PersonTableWidgetItem* editPersonItem = dynamic_cast<PersonTableWidgetItem*>
+            (ui->tw_personList->item(currentRow,0));
 
-    QTableWidgetItem *pPersonItemName = new QTableWidgetItem;
-    QTableWidgetItem *pPersonItemPatronymic = new QTableWidgetItem;
-    QTableWidgetItem *pPersonItemPassport = new QTableWidgetItem;
-    QTableWidgetItem *pPersonItemPhone = new QTableWidgetItem;
-    PersonButtonEdit *pButtonEdit = new PersonButtonEdit(pPerson);
-    pButtonEdit->setText("edit");
-    connect(pButtonEdit, &QPushButton::clicked, this, &MainWindow::createPersonEditDialog);
+    editPersonItem->pPerson()->setSurname(surname);
+    editPersonItem->pPerson()->setName(name);
+    editPersonItem->pPerson()->setPatronymic(patronymic);
+    editPersonItem->pPerson()->setPassport(passport);
+    editPersonItem->pPerson()->setPhone(phone);
+    editPersonItem->pPerson()->overwriteBankList(editPesronBanks);
 
-    PersonButtonEdit *pButtonDelete = new PersonButtonEdit(pPerson);
-    pButtonDelete->setText("delete");
-    connect(pButtonDelete, &QPushButton::clicked, this,
-            static_cast<void(MainWindow::*) ()>(&MainWindow::deletePerson));
-
-    int row = ui->tw_personList->rowCount();
-    ui->tw_personList->insertRow(row);
-
-    pPersonTableWidgetItemSurname->setCurrentSurname();
-    pPersonItemName->setText(pPerson->getName());
-    pPersonItemPatronymic->setText(pPerson->getPatronymic());
-    pPersonItemPassport->setText(pPerson->getPassport());
-    pPersonItemPhone->setText(pPerson->getPhone());
-
-    ui->tw_personList->setItem(row,0, pPersonTableWidgetItemSurname);
-    ui->tw_personList->setItem(row,1, pPersonItemName);
-    ui->tw_personList->setItem(row,2, pPersonItemPatronymic);
-    ui->tw_personList->setItem(row,3, pPersonItemPassport);
-    ui->tw_personList->setItem(row,4, pPersonItemPhone);
-
-    ui->tw_personList->setCellWidget(row,5,pButtonEdit);
-    //pButtonEdit->setCurrentRowButton(row);
-    ui->tw_personList->setCellWidget(row,6,pButtonDelete);
-    //pButtonDelete->setCurrentRowButton(row);
-    ui->tw_personList->sortByColumn(0,Qt::AscendingOrder);
+    ui->tw_personList->item(currentRow,0)->setText(surname);
+    ui->tw_personList->item(currentRow,1)->setText(name);
+    ui->tw_personList->item(currentRow,2)->setText(patronymic);
+    ui->tw_personList->item(currentRow,3)->setText(passport);
+    ui->tw_personList->item(currentRow,4)->setText(phone);
 
     m_dialogEdit->close();
+    delete m_dialogEdit;
     m_dialogEdit = nullptr;
+    ui->lw_bankList->clear();
+    ui->lw_bankList->addItems(editPersonItem->getPersonBanks());
 }
 
 void MainWindow::deletePerson()
@@ -244,11 +223,11 @@ void MainWindow::deletePerson()
         int currentRow = binarySearchSurname(pButtonDelete->personButton()->getSurname(),
                                              pButtonDelete->personButton()->getPassport());
         if(ui->tw_personList->item(currentRow, 0) != nullptr){
-        PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
-                (ui->tw_personList->item(currentRow, 0));
-        delete personTableItem->pPerson();
-        delete personTableItem;
-        personTableItem = nullptr;
+            PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
+                    (ui->tw_personList->item(currentRow, 0));
+            delete personTableItem->pPerson();
+            delete personTableItem;
+            personTableItem = nullptr;
         }
         for (int i = 1; i < 5 ; ++i) {
             delete ui->tw_personList->item(currentRow, i);
@@ -261,26 +240,26 @@ void MainWindow::deletePerson()
     }
 }
 
-void MainWindow::deletePerson(const QString &oldSurname, const QString &oldPassport)
-{
-    int currentRow = binarySearchSurname(oldSurname, oldPassport);
-    if(ui->tw_personList->item(currentRow, 0) != nullptr){
-    PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
-            (ui->tw_personList->item(currentRow, 0));
-    delete personTableItem->pPerson();
-    delete personTableItem;
-    personTableItem = nullptr;
-    }
-    for (int i = 1; i < 5 ; ++i) {
-        delete ui->tw_personList->item(currentRow, i);
-    }
-    for (int i = 5; i < 7; ++i){
-        delete ui->tw_personList->cellWidget(currentRow, i);
-    }
-    ui->lw_bankList->clear();
-    ui->tw_personList->removeRow(currentRow);
+//void MainWindow::deletePerson(const QString &oldSurname, const QString &oldPassport)
+//{
+//    int currentRow = binarySearchSurname(oldSurname, oldPassport);
+//    if(ui->tw_personList->item(currentRow, 0) != nullptr){
+//    PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
+//            (ui->tw_personList->item(currentRow, 0));
+//    delete personTableItem->pPerson();
+//    delete personTableItem;
+//    personTableItem = nullptr;
+//    }
+//    for (int i = 1; i < 5 ; ++i) {
+//        delete ui->tw_personList->item(currentRow, i);
+//    }
+//    for (int i = 5; i < 7; ++i){
+//        delete ui->tw_personList->cellWidget(currentRow, i);
+//    }
+//    ui->lw_bankList->clear();
+//    ui->tw_personList->removeRow(currentRow);
 
-}
+//}
 
 
 int MainWindow::binarySearchSurname(const QString &surname, const QString &passport)
@@ -288,15 +267,14 @@ int MainWindow::binarySearchSurname(const QString &surname, const QString &passp
     int searchLetterCode = surname.at(0).unicode();
     int rightBorder = ui->tw_personList->rowCount()-1;
     int leftBorder = 0;
-    bool isFound = 0;
-    int middle;
+    int middle = 0;
     PersonTableWidgetItem* checkPerson;
 
     if(rightBorder == leftBorder){
-        return rightBorder;
+        return findByPassport(rightBorder, passport);
     }
 
-    while (rightBorder > leftBorder && !isFound) {
+    while (rightBorder >= leftBorder) {
         middle = (rightBorder + leftBorder)/2;
         checkPerson = dynamic_cast<PersonTableWidgetItem*>
                 (ui->tw_personList->item(middle,0));
@@ -306,30 +284,32 @@ int MainWindow::binarySearchSurname(const QString &surname, const QString &passp
             leftBorder = middle + 1;
         }else if(checkLetterCode > searchLetterCode){
             rightBorder = middle - 1;
-        }else if(checkLetterCode == searchLetterCode){
-            isFound = 1;
+        }else if(checkLetterCode == searchLetterCode){            
             while (checkLetterCode == searchLetterCode){
-                --middle;
-                if(middle > 0){
+
                     checkPerson = dynamic_cast<PersonTableWidgetItem*>
                             (ui->tw_personList->item(middle,0));
                     checkLetterCode = checkPerson->pPerson()->getSurname().at(0).unicode();
-                }else break;
+                    if(checkLetterCode == searchLetterCode) --middle;
             }
+            return findByPassport(middle, passport);
         }
     }
-    if(isFound){
-        QString checkPassport;
+    return 0;
+}
 
-        while (checkPassport != passport){
-            middle += 1;
-            checkPerson = dynamic_cast<PersonTableWidgetItem*>
-                    (ui->tw_personList->item(middle, 0));
-            checkPassport = checkPerson->pPerson()->getPassport();
-        }
-        return middle;
+int MainWindow::findByPassport(int firstRowWithCurrentLetter,const QString &oldPassport)
+{
+    QString checkPassport;
+    PersonTableWidgetItem* checkPerson;
 
-    }else return -1;
+    while (checkPassport != oldPassport){
 
+        checkPerson = dynamic_cast<PersonTableWidgetItem*>
+                (ui->tw_personList->item(firstRowWithCurrentLetter, 0));
+        checkPassport = checkPerson->pPerson()->getPassport();
+        if(checkPassport != oldPassport) firstRowWithCurrentLetter += 1;
+    }
+    return firstRowWithCurrentLetter;
 
 }

@@ -33,6 +33,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     int binarySearchSurname(const QString &surname, const QString &passport);
+    int findByPassport(int firstRowWithCurrentLetter, const QString &oldPassport);
     void deletePerson(const QString &oldSurname, const QString &oldPassport);
 
     ~MainWindow();
