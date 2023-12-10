@@ -211,6 +211,7 @@ void MainWindow::onEditPerson(const QString &surname, const QString &name, const
     m_dialogEdit->close();
     delete m_dialogEdit;
     m_dialogEdit = nullptr;
+    ui->tw_personList->sortByColumn(0,Qt::AscendingOrder);
     ui->lw_bankList->clear();
     ui->lw_bankList->addItems(editPersonItem->getPersonBanks());
 }
@@ -258,10 +259,25 @@ void MainWindow::deletePerson()
 //    }
 //    ui->lw_bankList->clear();
 //    ui->tw_personList->removeRow(currentRow);
-
 //}
 
-
+// Функцию разбить на две функции:
+// Реализовать и протестировать бинарный поиск, который выполняет поиск по строке
+// (фамилии). В результате работы функции должны получать индекс элемента, в котором
+// содержится эта фамилия.
+// int binarySearchSurname(const QString &surname); O(log(N))
+//
+// Так как фамилии могут повторяться, то нужно брать этот индекс, фамилию которую мы ищем,
+// и подавать её в другую функцию, которая уже будет идти вниз и вверх пока фамилии элементов совпадают
+// и смотреть по паспорту на совпадение
+// int searchByPasport(const int id, const QString &passport)
+// up = id
+// down = id
+// while(true)
+// up = up + 1;
+// down = down - 1;
+//
+// Можно вызывать эти две функции из какой-то одной большой функции по типу той которая сейчас внизу.
 int MainWindow::binarySearchSurname(const QString &surname, const QString &passport)
 {
     int searchLetterCode = surname.at(0).unicode();
@@ -275,20 +291,23 @@ int MainWindow::binarySearchSurname(const QString &surname, const QString &passp
     }
 
     while (rightBorder >= leftBorder) {
-        middle = (rightBorder + leftBorder)/2;
-        checkPerson = dynamic_cast<PersonTableWidgetItem*>
-                (ui->tw_personList->item(middle,0));
+        middle = (rightBorder + leftBorder) / 2;
+        checkPerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(middle,0));
+        if(checkPerson == nullptr) {
+            qDebug() << middle << "Hello Liza 1 !!!";
+        }
         int checkLetterCode = checkPerson->pPerson()->getSurname().at(0).unicode();
 
         if(checkLetterCode < searchLetterCode){
             leftBorder = middle + 1;
         }else if(checkLetterCode > searchLetterCode){
             rightBorder = middle - 1;
-        }else if(checkLetterCode == searchLetterCode){            
+        }else if(checkLetterCode == searchLetterCode){
             while (checkLetterCode == searchLetterCode){
-
-                    checkPerson = dynamic_cast<PersonTableWidgetItem*>
-                            (ui->tw_personList->item(middle,0));
+                    checkPerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(middle,0));
+                    if(checkPerson == nullptr) {
+                        qDebug() << middle << "Hello Liza 2 !!!";
+                    }
                     checkLetterCode = checkPerson->pPerson()->getSurname().at(0).unicode();
                     if(checkLetterCode == searchLetterCode) --middle;
             }
