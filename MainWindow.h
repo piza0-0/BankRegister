@@ -32,9 +32,11 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    int binarySearchSurname(const QString &surname, const QString &passport);
-    int findByPassport(int firstRowWithCurrentLetter, const QString &oldPassport);
+    int binarySearchSurname(const QString &surname);
+    int searchByPassportAndSurname(const QString &searchSurname, const QString &searchPassport);
     void deletePerson(const QString &oldSurname, const QString &oldPassport);
+    QString binaryStringConcatenation(const QString &surname);
+    bool isSearchBinarySurnameIsHigher(const QString &searchSurnameBinary, const QString &compareSurnameBinary);
 
     ~MainWindow();
 

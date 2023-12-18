@@ -142,17 +142,47 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
 ////////TEST////////
 void MainWindow::on_pb_test_clicked() {
-    for(int i = 0; i < 100; i++) {
-        qDebug() << i;
+
         ui->le_name->setText("ТЕСТ");
-        ui->le_surname->setText("ТЕСТ");
+        ui->le_surname->setText("Астафьев");
         ui->le_patronymic->setText("ТЕСТТЕСТ");
         ui->le_passport->setText("4022689452");
         ui->le_phone->setText("6994423338");
         ui->lw_checkBanks->selectAll();
 
         on_pb_select_clicked();
-    }
+
+        ui->le_name->setText("ТЕСТ");
+        ui->le_surname->setText("Барбоскин");
+        ui->le_patronymic->setText("ТЕСТТЕСТ");
+        ui->le_passport->setText("4016514480");
+        ui->le_phone->setText("6994423338");
+        ui->lw_checkBanks->selectAll();
+        on_pb_select_clicked();
+        ui->le_name->setText("ТЕСТ");
+        ui->le_surname->setText("Лыжин");
+        ui->le_patronymic->setText("ТЕСТТЕСТ");
+        ui->le_passport->setText("6314876328");
+        ui->le_phone->setText("6994423338");
+        ui->lw_checkBanks->selectAll();
+        on_pb_select_clicked();
+
+
+        ui->le_name->setText("ТЕСТ");
+        ui->le_surname->setText("Парашин");
+        ui->le_patronymic->setText("ТЕСТТЕСТ");
+        ui->le_passport->setText("4016558792");
+        ui->le_phone->setText("6994423338");
+        ui->lw_checkBanks->selectAll();
+        on_pb_select_clicked();
+        ui->le_name->setText("ТЕСТ");
+        ui->le_surname->setText("Петухов");
+        ui->le_patronymic->setText("ТЕСТТЕСТ");
+        ui->le_passport->setText("6151418191");
+        ui->le_phone->setText("6994423338");
+        ui->lw_checkBanks->selectAll();
+        on_pb_select_clicked();
+
 }
 
 
@@ -191,7 +221,8 @@ void MainWindow::onEditPerson(const QString &surname, const QString &name, const
                               const QString &passport, const QString &phone,
                               const QList<QListWidgetItem *> &editPesronBanks,
                               const QString &oldSurname, const QString &oldPassport) {
-    int currentRow = binarySearchSurname(oldSurname, oldPassport);
+    int currentRow = searchByPassportAndSurname(oldSurname, oldPassport);
+    if(currentRow != -1){
     PersonTableWidgetItem* editPersonItem = dynamic_cast<PersonTableWidgetItem*>
             (ui->tw_personList->item(currentRow,0));
 
@@ -206,7 +237,7 @@ void MainWindow::onEditPerson(const QString &surname, const QString &name, const
     ui->tw_personList->item(currentRow,1)->setText(name);
     ui->tw_personList->item(currentRow,2)->setText(patronymic);
     ui->tw_personList->item(currentRow,3)->setText(passport);
-    ui->tw_personList->item(currentRow,4)->setText(phone);
+    ui->tw_personList->item(currentRow,4)->setText(phone);    
 
     m_dialogEdit->close();
     delete m_dialogEdit;
@@ -214,6 +245,11 @@ void MainWindow::onEditPerson(const QString &surname, const QString &name, const
     ui->tw_personList->sortByColumn(0,Qt::AscendingOrder);
     ui->lw_bankList->clear();
     ui->lw_bankList->addItems(editPersonItem->getPersonBanks());
+    }else
+    {
+        qDebug() << "Крашнулась замена имени onEditPerson";
+    }
+
 }
 
 void MainWindow::deletePerson()
@@ -221,15 +257,16 @@ void MainWindow::deletePerson()
     QObject *senderObj = sender();
     if (senderObj!=nullptr){
         PersonButtonEdit *pButtonDelete = dynamic_cast<PersonButtonEdit*>(senderObj);
-        int currentRow = binarySearchSurname(pButtonDelete->personButton()->getSurname(),
-                                             pButtonDelete->personButton()->getPassport());
-        if(ui->tw_personList->item(currentRow, 0) != nullptr){
-            PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
-                    (ui->tw_personList->item(currentRow, 0));
-            delete personTableItem->pPerson();
-            delete personTableItem;
-            personTableItem = nullptr;
-        }
+        int currentRow = searchByPassportAndSurname(pButtonDelete->personButton()->getSurname(),
+                                                    pButtonDelete->personButton()->getPassport());
+        if(currentRow != -1){
+            if(ui->tw_personList->item(currentRow, 0) != nullptr){
+                PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
+                        (ui->tw_personList->item(currentRow, 0));
+                delete personTableItem->pPerson();
+                delete personTableItem;
+                personTableItem = nullptr;
+            }
         for (int i = 1; i < 5 ; ++i) {
             delete ui->tw_personList->item(currentRow, i);
         }
@@ -238,28 +275,13 @@ void MainWindow::deletePerson()
         }
         ui->lw_bankList->clear();
         ui->tw_personList->removeRow(currentRow);
-    }
+    }else qDebug() << "Крашнулось удаление";
+}
 }
 
-//void MainWindow::deletePerson(const QString &oldSurname, const QString &oldPassport)
-//{
-//    int currentRow = binarySearchSurname(oldSurname, oldPassport);
-//    if(ui->tw_personList->item(currentRow, 0) != nullptr){
-//    PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
-//            (ui->tw_personList->item(currentRow, 0));
-//    delete personTableItem->pPerson();
-//    delete personTableItem;
-//    personTableItem = nullptr;
-//    }
-//    for (int i = 1; i < 5 ; ++i) {
-//        delete ui->tw_personList->item(currentRow, i);
-//    }
-//    for (int i = 5; i < 7; ++i){
-//        delete ui->tw_personList->cellWidget(currentRow, i);
-//    }
-//    ui->lw_bankList->clear();
-//    ui->tw_personList->removeRow(currentRow);
-//}
+
+
+
 
 // Функцию разбить на две функции:
 // Реализовать и протестировать бинарный поиск, который выполняет поиск по строке
@@ -278,57 +300,99 @@ void MainWindow::deletePerson()
 // down = down - 1;
 //
 // Можно вызывать эти две функции из какой-то одной большой функции по типу той которая сейчас внизу.
-int MainWindow::binarySearchSurname(const QString &surname, const QString &passport)
+
+
+int MainWindow::searchByPassportAndSurname(const QString &searchSurname, const QString &searchPassport)
 {
-    int searchLetterCode = surname.at(0).unicode();
+    int rowWithCurrentSurname = binarySearchSurname(searchSurname);
+    PersonTableWidgetItem *pComparePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(rowWithCurrentSurname,0));
+    if(pComparePerson->pPerson()->getPassport() == searchPassport){
+        return rowWithCurrentSurname;
+    }
+    if (rowWithCurrentSurname != -1){
+        int downCounter = rowWithCurrentSurname;
+        int upCounter = rowWithCurrentSurname;
+
+        while (downCounter > 0 || upCounter <= ui->tw_personList->rowCount()) {
+            --downCounter;
+            ++upCounter;
+            if (downCounter >= 0){
+                pComparePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(downCounter,0));
+                if (pComparePerson->pPerson()->getPassport() == searchPassport){
+
+                    return downCounter;
+                }
+            }
+            if (upCounter <= ui->tw_personList->rowCount()){
+                pComparePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(upCounter,0));
+                if (pComparePerson->pPerson()->getPassport() == searchPassport){
+
+                    return upCounter;
+                }
+            }
+        }
+    }
+    return -1;
+}
+
+int MainWindow::binarySearchSurname(const QString &surname)
+{
+    QString searchSurnameBinary = binaryStringConcatenation(surname);
     int rightBorder = ui->tw_personList->rowCount()-1;
     int leftBorder = 0;
     int middle = 0;
-    PersonTableWidgetItem* checkPerson;
 
-    if(rightBorder == leftBorder){
-        return findByPassport(rightBorder, passport);
-    }
 
     while (rightBorder >= leftBorder) {
-        middle = (rightBorder + leftBorder) / 2;
-        checkPerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(middle,0));
-        if(checkPerson == nullptr) {
-            qDebug() << middle << "Hello Liza 1 !!!";
+        if (leftBorder == rightBorder){
+            return leftBorder;
         }
-        int checkLetterCode = checkPerson->pPerson()->getSurname().at(0).unicode();
+        middle = (rightBorder + leftBorder) / 2;
+        if(middle < 0) {
+            qDebug() << middle << "Pizdec!!!";
+            break;
+        }
+        PersonTableWidgetItem* pComparePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(middle,0));
+        QString compareSurnameBinary = binaryStringConcatenation(pComparePerson->pPerson()->getSurname());
 
-        if(checkLetterCode < searchLetterCode){
+        if(compareSurnameBinary != searchSurnameBinary
+                && isSearchBinarySurnameIsHigher(searchSurnameBinary, compareSurnameBinary)){
             leftBorder = middle + 1;
-        }else if(checkLetterCode > searchLetterCode){
+        }else if(compareSurnameBinary != searchSurnameBinary
+                 && (!isSearchBinarySurnameIsHigher(searchSurnameBinary, compareSurnameBinary))){
             rightBorder = middle - 1;
-        }else if(checkLetterCode == searchLetterCode){
-            while (checkLetterCode == searchLetterCode){
-                    checkPerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(middle,0));
-                    if(checkPerson == nullptr) {
-                        qDebug() << middle << "Hello Liza 2 !!!";
-                    }
-                    checkLetterCode = checkPerson->pPerson()->getSurname().at(0).unicode();
-                    if(checkLetterCode == searchLetterCode) --middle;
-            }
-            return findByPassport(middle, passport);
+        }else{
+            return middle;
         }
     }
-    return 0;
+    return -1;
 }
 
-int MainWindow::findByPassport(int firstRowWithCurrentLetter,const QString &oldPassport)
+//Фукнция конкатенации бинарника фамилии
+
+QString MainWindow::binaryStringConcatenation(const QString &surname)
 {
-    QString checkPassport;
-    PersonTableWidgetItem* checkPerson;
+    QString binaryStringSurname;
 
-    while (checkPassport != oldPassport){
-
-        checkPerson = dynamic_cast<PersonTableWidgetItem*>
-                (ui->tw_personList->item(firstRowWithCurrentLetter, 0));
-        checkPassport = checkPerson->pPerson()->getPassport();
-        if(checkPassport != oldPassport) firstRowWithCurrentLetter += 1;
+    for(int i = 0; i < surname.size(); ++i){
+        int letter = surname.at(i).unicode();
+        binaryStringSurname.push_back(QString::number(letter));
     }
-    return firstRowWithCurrentLetter;
+    return binaryStringSurname;
+}
 
+//сравнение бинарных строк QString
+
+bool MainWindow::isSearchBinarySurnameIsHigher(const QString &searchSurnameBinary, const QString &compareSurnameBinary)
+{
+
+    for (int i = 0; i < searchSurnameBinary.size() && i < compareSurnameBinary; ++i){
+        if (searchSurnameBinary.at(i) > compareSurnameBinary.at(i)){
+            return 1;
+        }
+        if (searchSurnameBinary.at(i) < compareSurnameBinary.at(i)){
+            return 0;
+        }
+    }
+    return 1;
 }
