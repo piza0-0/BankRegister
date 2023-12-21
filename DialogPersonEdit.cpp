@@ -8,7 +8,7 @@ DialogPersonEdit::DialogPersonEdit(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("Редактирование пользователей");
     ui->le_dphone->setInputMask("+7(999)999-9999");
-
+    this->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
 
     ui->lw_personBanks->setSelectionMode(QAbstractItemView::MultiSelection);
 }
@@ -46,6 +46,7 @@ void DialogPersonEdit::setPersonInfo(const Person *person, const QStringList &ba
     }
 }
 
+
 void DialogPersonEdit::on_pb_dsave_clicked()
 {
     m_surname = ui->le_dsurname->text();
@@ -60,19 +61,9 @@ void DialogPersonEdit::on_pb_dsave_clicked()
 
 }
 
-//void DialogPersonEdit::setCurrentRowDialog(int newCurrentRow)
-//{
-//    m_currentRow = newCurrentRow;
-//}
-
 
 void DialogPersonEdit::on_pb_ddiscard_clicked()
 {
-    int result = QMessageBox::question(this, "Внимание", "Вы точно хотите закрыть окно?"
-                                            " Все внесенные изменения не будут сохранены",
-                          QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
-    if(result == QMessageBox::Ok){
         this->close();
-    }
 }
 

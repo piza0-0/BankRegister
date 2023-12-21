@@ -56,6 +56,7 @@ private slots:
                       const QList<QListWidgetItem*> &,
                       const QString &oldSurname, const QString &oldPassport);
 
+
     void deletePerson();
 
 private:

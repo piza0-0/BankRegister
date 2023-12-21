@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QString>
 #include <QMessageBox>
+#include <QCloseEvent>
 
 #include "Person.h"
 
