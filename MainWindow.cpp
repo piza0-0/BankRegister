@@ -11,6 +11,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setWindowTitle("Клиентская база");
 
+    QPixmap logo(":/img_logo/images/GNUlogo_levitate.png");
+    int h = ui->l_logo->height();
+    ui->l_logo->setPixmap(logo.scaled(215, h));
+
+
     ui->tw_personList->setColumnCount(7);
     ui->tw_personList->setHorizontalHeaderLabels({"Фамилия","Имя","Отчество", "Паспорт",
                                                   "Номер", " ", " "});

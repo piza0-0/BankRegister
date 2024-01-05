@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/img_logo">
+        <file>images/GNUlogo.png</file>
+        <file>images/GNUlogo_levitate.png</file>
+    </qresource>
+</RCC>
