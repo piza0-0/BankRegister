@@ -1,6 +1,6 @@
 #include "AuthorizationDialog.h"
 #include "ui_AuthorizationDialog.h"
-#include <QPixmap>
+
 
 AuthorizationDialog::AuthorizationDialog(QWidget *parent) :
     QDialog(parent),
@@ -13,6 +13,8 @@ AuthorizationDialog::AuthorizationDialog(QWidget *parent) :
     int h = ui->l_logo->height();
     ui->l_logo->setPixmap(logo.scaled(w, h));
 
+    ui->l_wrongData->setStyleSheet("color: red;");
+    ui->l_wrongData->hide();
 
 }
 
@@ -20,3 +22,21 @@ AuthorizationDialog::~AuthorizationDialog()
 {
     delete ui;
 }
+
+void AuthorizationDialog::on_pb_accept_clicked()
+{
+    QString filePath = QApplication::applicationDirPath() + "/config.ini";
+    QSettings configFile(filePath, QSettings::IniFormat);
+    configFile.beginGroup("Personal");
+    QString login = configFile.value("Login","").toString();
+    QString password = configFile.value("Password","").toString();
+    configFile.endGroup();
+    if (login == ui->le_login->text() && password == ui->le_password->text()){
+        emit authorizationComplete();
+    }else{
+        ui->l_wrongData->show();
+    }
+
+
+}
+

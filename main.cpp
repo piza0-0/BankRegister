@@ -1,5 +1,4 @@
-#include "MainWindow.h"
-#include "AuthorizationDialog.h"
+#include "ConnectionClass.h"
 
 #include <QApplication>
 
@@ -14,12 +13,10 @@
  */
 
 int main(int argc, char *argv[])
-{
+{        
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    //AuthorizationDialog d;
-    //d.show();
+    ConnectionClass cc;
 
     return a.exec();
 }
+
