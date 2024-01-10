@@ -13,6 +13,9 @@ RegistrationDialog::RegistrationDialog(QWidget *parent) :
     int h = ui->l_logo->height();
     ui->l_logo->setPixmap(logo.scaled(w, h));
 
+    ui->l_wrongData->setStyleSheet("color: red;");
+    ui->l_wrongData->hide();
+    ui->l_wrongData->setWordWrap(true);
 
 }
 
@@ -22,13 +25,18 @@ RegistrationDialog::~RegistrationDialog()
 }
 
 void RegistrationDialog::on_pb_accept_clicked()
-{
+{   
+    QString password = ui->le_newPass->text();
+    if(password.size() >= 4){
     QString filePath = QApplication::applicationDirPath() + "/config.ini";
     QSettings configFile(filePath, QSettings::IniFormat);
     configFile.beginGroup("Personal");
     configFile.setValue("Login", ui->le_newLog->text());
-    configFile.setValue("Password", ui->le_newPass->text());
+    configFile.setValue("Password", password);
     configFile.endGroup();
-    emit registrationComplete();
+    emit registrationComplete();}
+    else{
+        ui->l_wrongData->show();
+    }
 }
 

@@ -36,6 +36,8 @@ public:
     QLabel *l_newPass;
     QLineEdit *le_newPass;
     QSpacerItem *vs_middle;
+    QLabel *l_wrongData;
+    QSpacerItem *verticalSpacer_3;
     QPushButton *pb_accept;
 
     void setupUi(QDialog *RegistrationDialog)
@@ -109,9 +111,34 @@ public:
 
         verticalLayout->addWidget(le_newPass);
 
-        vs_middle = new QSpacerItem(20, 65, QSizePolicy::Minimum, QSizePolicy::Fixed);
+        vs_middle = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed);
 
         verticalLayout->addItem(vs_middle);
+
+        l_wrongData = new QLabel(RegistrationDialog);
+        l_wrongData->setObjectName(QString::fromUtf8("l_wrongData"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(l_wrongData->sizePolicy().hasHeightForWidth());
+        l_wrongData->setSizePolicy(sizePolicy1);
+        l_wrongData->setMinimumSize(QSize(0, 60));
+        l_wrongData->setMaximumSize(QSize(16777215, 60));
+        QFont font1;
+        font1.setPointSize(13);
+        l_wrongData->setFont(font1);
+        l_wrongData->setAcceptDrops(false);
+        l_wrongData->setInputMethodHints(Qt::ImhNone);
+        l_wrongData->setTextFormat(Qt::AutoText);
+        l_wrongData->setScaledContents(false);
+        l_wrongData->setAlignment(Qt::AlignCenter);
+        l_wrongData->setWordWrap(true);
+
+        verticalLayout->addWidget(l_wrongData);
+
+        verticalSpacer_3 = new QSpacerItem(20, 15, QSizePolicy::Minimum, QSizePolicy::Fixed);
+
+        verticalLayout->addItem(verticalSpacer_3);
 
         pb_accept = new QPushButton(RegistrationDialog);
         pb_accept->setObjectName(QString::fromUtf8("pb_accept"));
@@ -132,6 +159,7 @@ public:
         l_logo->setText(QCoreApplication::translate("RegistrationDialog", "TextLabel", nullptr));
         l_newLog->setText(QCoreApplication::translate("RegistrationDialog", "\320\237\321\200\320\270\320\264\321\203\320\274\320\260\320\271\321\202\320\265 \320\273\320\276\320\263\320\270\320\275:", nullptr));
         l_newPass->setText(QCoreApplication::translate("RegistrationDialog", "\320\237\321\200\320\270\320\264\321\203\320\274\320\260\320\271\321\202\320\265 \320\277\320\260\321\200\320\276\320\273\321\214:", nullptr));
+        l_wrongData->setText(QCoreApplication::translate("RegistrationDialog", "\320\237\320\260\321\200\320\276\320\273\321\214 \321\201\320\273\320\270\321\210\320\272\320\276\320\274 \320\272\320\276\321\200\320\276\321\202\320\272\320\270\320\271. \320\237\320\276\320\266\320\260\320\273\321\203\320\271\321\201\321\202\320\260, \321\203\320\272\320\260\320\266\320\270\321\202\320\265 \320\277\320\260\321\200\320\276\320\273\321\214 \320\275\320\265 \320\274\320\265\320\275\320\265\320\265 4 \321\201\320\270\320\274\320\262\320\276\320\273\320\276\320\262", nullptr));
         pb_accept->setText(QCoreApplication::translate("RegistrationDialog", "\320\227\320\260\321\200\320\265\320\263\320\270\321\201\321\202\321\200\320\270\321\200\320\276\320\262\320\260\321\202\321\214\321\201\321\217", nullptr));
     } // retranslateUi
 
