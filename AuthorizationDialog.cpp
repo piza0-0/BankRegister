@@ -13,8 +13,7 @@ AuthorizationDialog::AuthorizationDialog(QWidget *parent) :
     int h = ui->l_logo->height();
     ui->l_logo->setPixmap(logo.scaled(w, h));
 
-    ui->l_wrongData->setStyleSheet("color: red;");
-    ui->l_wrongData->hide();
+    ui->l_wrongData->setStyleSheet("color: #121f41;");
 
 }
 
@@ -34,7 +33,7 @@ void AuthorizationDialog::on_pb_accept_clicked()
     if (login == ui->le_login->text() && password == ui->le_password->text()){
         emit authorizationComplete();
     }else{
-        ui->l_wrongData->show();
+        ui->l_wrongData->setStyleSheet("color: #e84e84;");
     }
 
 
