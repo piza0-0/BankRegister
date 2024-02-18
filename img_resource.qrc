@@ -1,6 +1,16 @@
 <RCC>
     <qresource prefix="/img_logo">
-        <file>images/GNUlogo.png</file>
         <file>images/GNUlogo_levitate.png</file>
+        <file>images/GNUlogo.png</file>
+    </qresource>
+    <qresource prefix="/design">
+        <file>style.qss</file>
+    </qresource>
+    <qresource prefix="/font">
+        <file>fonts/Helvetica.otf</file>
+    </qresource>
+    <qresource prefix="/scrollBar">
+        <file>images/arrowUp.png</file>
+        <file>images/arrowDown.png</file>
     </qresource>
 </RCC>
