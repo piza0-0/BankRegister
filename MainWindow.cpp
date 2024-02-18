@@ -10,12 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Клиентская база");
-
+    ui->tw_personList->horizontalHeader()->setHighlightSections(false);
     QPixmap logo(":/img_logo/images/GNUlogo_levitate.png");
     int h = ui->l_logo->height();
-    ui->l_logo->setPixmap(logo.scaled(215, h));
-
-
+    ui->l_logo->setPixmap(logo.scaled(215, h));    
     ui->tw_personList->setColumnCount(7);
     ui->tw_personList->setHorizontalHeaderLabels({"Фамилия","Имя","Отчество", "Паспорт",
                                                   "Номер", " ", " "});
@@ -32,8 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tw_personList->horizontalHeader()->setSectionResizeMode(5,QHeaderView::Fixed);
     ui->tw_personList->setColumnWidth(6,50);
 
-
-
     QRegExpValidator *validator = new QRegExpValidator(QRegExp("[А-Яа-я]{2,40}"));
 
     ui->le_name->setValidator(validator);
@@ -44,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->tw_personList->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tw_personList->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->lw_bankList->setSelectionMode(QAbstractItemView::NoSelection);
 
     connect(ui->tw_personList, &QTableWidget::cellClicked,
             [=](int row, int coll) {
