@@ -66,6 +66,8 @@ public:
 
         le_dsurname = new QLineEdit(DialogPersonEdit);
         le_dsurname->setObjectName(QString::fromUtf8("le_dsurname"));
+        le_dsurname->setMinimumSize(QSize(0, 30));
+        le_dsurname->setMaximumSize(QSize(16777215, 30));
 
         formLayout->setWidget(0, QFormLayout::FieldRole, le_dsurname);
 
@@ -76,6 +78,8 @@ public:
 
         le_dname = new QLineEdit(DialogPersonEdit);
         le_dname->setObjectName(QString::fromUtf8("le_dname"));
+        le_dname->setMinimumSize(QSize(0, 30));
+        le_dname->setMaximumSize(QSize(16777215, 30));
 
         formLayout->setWidget(1, QFormLayout::FieldRole, le_dname);
 
@@ -86,6 +90,8 @@ public:
 
         le_dpatronymic = new QLineEdit(DialogPersonEdit);
         le_dpatronymic->setObjectName(QString::fromUtf8("le_dpatronymic"));
+        le_dpatronymic->setMinimumSize(QSize(0, 30));
+        le_dpatronymic->setMaximumSize(QSize(16777215, 30));
 
         formLayout->setWidget(2, QFormLayout::FieldRole, le_dpatronymic);
 
@@ -96,6 +102,8 @@ public:
 
         le_dpassport = new QLineEdit(DialogPersonEdit);
         le_dpassport->setObjectName(QString::fromUtf8("le_dpassport"));
+        le_dpassport->setMinimumSize(QSize(0, 30));
+        le_dpassport->setMaximumSize(QSize(16777215, 30));
 
         formLayout->setWidget(3, QFormLayout::FieldRole, le_dpassport);
 
@@ -106,6 +114,8 @@ public:
 
         le_dphone = new QLineEdit(DialogPersonEdit);
         le_dphone->setObjectName(QString::fromUtf8("le_dphone"));
+        le_dphone->setMinimumSize(QSize(0, 30));
+        le_dphone->setMaximumSize(QSize(16777215, 30));
 
         formLayout->setWidget(4, QFormLayout::FieldRole, le_dphone);
 
@@ -148,8 +158,8 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(pb_ddiscard->sizePolicy().hasHeightForWidth());
         pb_ddiscard->setSizePolicy(sizePolicy1);
-        pb_ddiscard->setMinimumSize(QSize(83, 37));
-        pb_ddiscard->setMaximumSize(QSize(80, 37));
+        pb_ddiscard->setMinimumSize(QSize(87, 37));
+        pb_ddiscard->setMaximumSize(QSize(85, 37));
 
         horizontalLayout->addWidget(pb_ddiscard);
 
@@ -157,7 +167,7 @@ public:
         pb_dsave->setObjectName(QString::fromUtf8("pb_dsave"));
         sizePolicy1.setHeightForWidth(pb_dsave->sizePolicy().hasHeightForWidth());
         pb_dsave->setSizePolicy(sizePolicy1);
-        pb_dsave->setMinimumSize(QSize(83, 37));
+        pb_dsave->setMinimumSize(QSize(87, 37));
         pb_dsave->setMaximumSize(QSize(75, 37));
         pb_dsave->setLayoutDirection(Qt::LeftToRight);
 

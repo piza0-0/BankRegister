@@ -172,13 +172,16 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(10, -1, 10, -1);
         pb_select = new QPushButton(centralwidget);
         pb_select->setObjectName(QString::fromUtf8("pb_select"));
-        QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy4.setHorizontalStretch(50);
+        QSizePolicy sizePolicy4(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(0);
         sizePolicy4.setHeightForWidth(pb_select->sizePolicy().hasHeightForWidth());
         pb_select->setSizePolicy(sizePolicy4);
+        pb_select->setMinimumSize(QSize(110, 28));
+        pb_select->setMaximumSize(QSize(110, 28));
         pb_select->setLayoutDirection(Qt::RightToLeft);
 
         horizontalLayout->addWidget(pb_select);
@@ -187,6 +190,8 @@ public:
         pb_test->setObjectName(QString::fromUtf8("pb_test"));
         sizePolicy4.setHeightForWidth(pb_test->sizePolicy().hasHeightForWidth());
         pb_test->setSizePolicy(sizePolicy4);
+        pb_test->setMinimumSize(QSize(110, 28));
+        pb_test->setMaximumSize(QSize(110, 28));
         pb_test->setLayoutDirection(Qt::RightToLeft);
 
         horizontalLayout->addWidget(pb_test);
@@ -203,11 +208,8 @@ public:
 
         l_logo = new QLabel(centralwidget);
         l_logo->setObjectName(QString::fromUtf8("l_logo"));
-        QSizePolicy sizePolicy5(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(l_logo->sizePolicy().hasHeightForWidth());
-        l_logo->setSizePolicy(sizePolicy5);
+        sizePolicy4.setHeightForWidth(l_logo->sizePolicy().hasHeightForWidth());
+        l_logo->setSizePolicy(sizePolicy4);
         l_logo->setMinimumSize(QSize(250, 200));
         l_logo->setMaximumSize(QSize(16777215, 200));
         l_logo->setAlignment(Qt::AlignCenter);
@@ -223,13 +225,13 @@ public:
 
         lw_bankList = new QListWidget(centralwidget);
         lw_bankList->setObjectName(QString::fromUtf8("lw_bankList"));
-        QSizePolicy sizePolicy6(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy6.setHorizontalStretch(60);
-        sizePolicy6.setVerticalStretch(40);
-        sizePolicy6.setHeightForWidth(lw_bankList->sizePolicy().hasHeightForWidth());
-        lw_bankList->setSizePolicy(sizePolicy6);
-        lw_bankList->setMinimumSize(QSize(150, 0));
-        lw_bankList->setMaximumSize(QSize(170, 400));
+        QSizePolicy sizePolicy5(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(60);
+        sizePolicy5.setVerticalStretch(40);
+        sizePolicy5.setHeightForWidth(lw_bankList->sizePolicy().hasHeightForWidth());
+        lw_bankList->setSizePolicy(sizePolicy5);
+        lw_bankList->setMinimumSize(QSize(190, 0));
+        lw_bankList->setMaximumSize(QSize(190, 400));
 
         gridLayout_2->addWidget(lw_bankList, 0, 3, 1, 1);
 
