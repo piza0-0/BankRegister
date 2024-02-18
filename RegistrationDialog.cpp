@@ -13,10 +13,7 @@ RegistrationDialog::RegistrationDialog(QWidget *parent) :
     int h = ui->l_logo->height();
     ui->l_logo->setPixmap(logo.scaled(w, h));
 
-    ui->l_wrongData->setStyleSheet("color: red;");
-    ui->l_wrongData->hide();
-    ui->l_wrongData->setWordWrap(true);
-
+    ui->l_wrongData_reg->setStyleSheet("color: #121f41;");
 }
 
 RegistrationDialog::~RegistrationDialog()
@@ -27,7 +24,8 @@ RegistrationDialog::~RegistrationDialog()
 void RegistrationDialog::on_pb_accept_clicked()
 {   
     QString password = ui->le_newPass->text();
-    if(password.size() >= 4){
+    QString login = ui->le_newLog->text();
+    if(password.size() >= 4 && login > 1){
     QString filePath = QApplication::applicationDirPath() + "/config.ini";
     QSettings configFile(filePath, QSettings::IniFormat);
     configFile.beginGroup("Personal");
@@ -36,7 +34,7 @@ void RegistrationDialog::on_pb_accept_clicked()
     configFile.endGroup();
     emit registrationComplete();}
     else{
-        ui->l_wrongData->show();
+        ui->l_wrongData_reg->setStyleSheet("color: #e84e84;");
     }
 }
 
