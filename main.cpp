@@ -15,6 +15,9 @@
 int main(int argc, char *argv[])
 {        
     QApplication a(argc, argv);
+    QFile style(":/design/style.qss");
+    style.open(QFile::ReadOnly);
+    a.setStyleSheet(style.readAll());
     ConnectionClass cc;
 
     return a.exec();
