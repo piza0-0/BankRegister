@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    algorithms = new BackendFunctions(this);
+
     this->setWindowTitle("Клиентская база");
     ui->tw_personList->horizontalHeader()->setHighlightSections(false);
     QPixmap logo(":/img_logo/images/GNUlogo_levitate.png");
@@ -219,44 +221,41 @@ void MainWindow::createPersonEditDialog() {
 }
 
 
-void MainWindow::onEditPerson(const QString &surname, const QString &name, const QString &patronymic,
-                              const QString &passport, const QString &phone,
-                              const QList<QListWidgetItem *> &editPesronBanks,
-                              const QString &oldSurname, const QString &oldPassport) {
-    int currentRow = searchByPassportAndSurname(oldSurname, oldPassport);
-    if(currentRow != -1){
-    PersonTableWidgetItem* editPersonItem = dynamic_cast<PersonTableWidgetItem*>
-            (ui->tw_personList->item(currentRow,0));
+void MainWindow::onEditPerson(const QList<QListWidgetItem*> &onEditPersonBanks) {
+    if (sender() != nullptr){
+        const DialogPersonEdit *onEditPerson = dynamic_cast<DialogPersonEdit*>(sender());
 
-    editPersonItem->pPerson()->setSurname(surname);
-    editPersonItem->pPerson()->setName(name);
-    editPersonItem->pPerson()->setPatronymic(patronymic);
-    editPersonItem->pPerson()->setPassport(passport);
-    editPersonItem->pPerson()->setPhone(phone);
-    editPersonItem->pPerson()->overwriteBankList(editPesronBanks);
+        int currentRow = searchByPassportAndSurname(onEditPerson->oldSurname(), onEditPerson->oldPassport());
 
-    ui->tw_personList->item(currentRow,0)->setText(surname);
-    ui->tw_personList->item(currentRow,1)->setText(name);
-    ui->tw_personList->item(currentRow,2)->setText(patronymic);
-    ui->tw_personList->item(currentRow,3)->setText(passport);
-    ui->tw_personList->item(currentRow,4)->setText(phone);    
+        PersonTableWidgetItem* editPersonItem = dynamic_cast<PersonTableWidgetItem*>
+                (ui->tw_personList->item(currentRow,0));
 
-    m_dialogEdit->close();
-    delete m_dialogEdit;
-    m_dialogEdit = nullptr;
-    ui->tw_personList->sortByColumn(0,Qt::AscendingOrder);
-    ui->lw_bankList->clear();
-    ui->lw_bankList->addItems(editPersonItem->getPersonBanks());
-    }else
-    {
-        qDebug() << "Крашнулась замена имени onEditPerson";
+        editPersonItem->pPerson()->setSurname(onEditPerson->surname());
+        editPersonItem->pPerson()->setName(onEditPerson->name());
+        editPersonItem->pPerson()->setPatronymic(onEditPerson->patronymic());
+        editPersonItem->pPerson()->setPassport(onEditPerson->passport());
+        editPersonItem->pPerson()->setPhone(onEditPerson->phone());
+        editPersonItem->pPerson()->overwriteBankList(onEditPersonBanks);
+
+        ui->tw_personList->item(currentRow,0)->setText(onEditPerson->surname());
+        ui->tw_personList->item(currentRow,1)->setText(onEditPerson->name());
+        ui->tw_personList->item(currentRow,2)->setText(onEditPerson->patronymic());
+        ui->tw_personList->item(currentRow,3)->setText(onEditPerson->passport());
+        ui->tw_personList->item(currentRow,4)->setText(onEditPerson->phone());
+
+        m_dialogEdit->close();
+        delete m_dialogEdit;
+        m_dialogEdit = nullptr;
+        ui->tw_personList->sortByColumn(0,Qt::AscendingOrder);
+        ui->lw_bankList->clear();
+        ui->lw_bankList->addItems(editPersonItem->getPersonBanks());
     }
-
 }
 
 void MainWindow::deletePerson()
 {
     QObject *senderObj = sender();
+    //int columns = ui->tw_personList->columnCount();
     if (senderObj!=nullptr){
         PersonButtonEdit *pButtonDelete = dynamic_cast<PersonButtonEdit*>(senderObj);
         int currentRow = searchByPassportAndSurname(pButtonDelete->personButton()->getSurname(),
@@ -343,7 +342,6 @@ int MainWindow::binarySearchSurname(const QString &surname)
     int rightBorder = ui->tw_personList->rowCount()-1;
     int leftBorder = 0;
     int middle = 0;
-
 
     while (rightBorder >= leftBorder) {
         if (leftBorder == rightBorder){

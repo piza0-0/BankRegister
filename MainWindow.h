@@ -7,6 +7,7 @@
 #include "PersonTableWidgetItem.h"
 #include "PersonButtonEdit.h"
 #include "DialogPersonEdit.h"
+#include "BackendFunctions.h"
 
 /*
  * Завести массив где каждой букве будет соответствовать номер строки, с которой начинаются фамилии на эту букву
@@ -32,10 +33,15 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+
     int binarySearchSurname(const QString &surname);
+
     int searchByPassportAndSurname(const QString &searchSurname, const QString &searchPassport);
+
     void deletePerson(const QString &oldSurname, const QString &oldPassport);
+
     QString binaryStringConcatenation(const QString &surname);
+
     bool isSearchBinarySurnameIsHigher(const QString &searchSurnameBinary, const QString &compareSurnameBinary);
 
     ~MainWindow();
@@ -51,17 +57,13 @@ private slots:
 
     void createPersonEditDialog();
 
-    void onEditPerson(const QString &surname, const QString &name, const QString &patronymic,
-                      const QString &passport, const QString &phone,
-                      const QList<QListWidgetItem*> &,
-                      const QString &oldSurname, const QString &oldPassport);
-
+    void onEditPerson(const QList<QListWidgetItem*> &onEditPersonBanks);
 
     void deletePerson();
 
 private:
-    // ../PeopleBaza/image.png
     Ui::MainWindow *ui;
+    BackendFunctions *algorithms = nullptr;
     QStringList m_bankList;
     bool lengthCheck();
     DialogPersonEdit* m_dialogEdit = nullptr;

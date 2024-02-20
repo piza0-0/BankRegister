@@ -24,12 +24,22 @@ public:
 
     void setCurrentRowDialog (int newCurrentRow);
 
+    const QString &name() const;
+
+    const QString &surname() const;
+
+    const QString &patronymic() const;
+
+    const QString &passport() const;
+
+    const QString &phone() const;
+
+    const QString &oldSurname() const;
+
+    const QString &oldPassport() const;
+
 signals:
-    void editPerson(const QString &surname, const QString &name,
-                    const QString &patronymic, const QString &passport,
-                    const QString &phone,
-                    const QList<QListWidgetItem*> &editPersonBanks,
-                    const QString &oldSurname, const QString &oldPassport);
+    void editPerson(const QList<QListWidgetItem*> &onEditPersonBanks);
 
 private slots:
     void on_pb_dsave_clicked();

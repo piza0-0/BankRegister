@@ -55,15 +55,49 @@ void DialogPersonEdit::on_pb_dsave_clicked()
     m_passport = ui->le_dpassport->text();
     m_phone = ui->le_dphone->text();
 
-    emit editPerson(m_surname, m_name, m_patronymic, m_passport, m_phone,
-                    ui->lw_personBanks->selectedItems(),
-                    m_oldSurname, m_oldPassport);
-
+    emit editPerson(ui->lw_personBanks->selectedItems());
 }
 
 
+
+//Геттеры для испрользования в слоте MainWindow onEditPerson
 void DialogPersonEdit::on_pb_ddiscard_clicked()
 {
-        this->close();
+    this->close();
+}
+
+const QString &DialogPersonEdit::oldPassport() const
+{
+    return m_oldPassport;
+}
+
+const QString &DialogPersonEdit::oldSurname() const
+{
+    return m_oldSurname;
+}
+
+const QString &DialogPersonEdit::phone() const
+{
+    return m_phone;
+}
+
+const QString &DialogPersonEdit::passport() const
+{
+    return m_passport;
+}
+
+const QString &DialogPersonEdit::patronymic() const
+{
+    return m_patronymic;
+}
+
+const QString &DialogPersonEdit::surname() const
+{
+    return m_surname;
+}
+
+const QString &DialogPersonEdit::name() const
+{
+    return m_name;
 }
 
