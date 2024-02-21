@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -62,11 +63,11 @@ private slots:
     void deletePerson();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *ui;    
     BackendFunctions *algorithms = nullptr;
     QStringList m_bankList;
     bool lengthCheck();
-    DialogPersonEdit* m_dialogEdit = nullptr;
+    DialogPersonEdit* m_dialogEdit = nullptr;    
 };
 
 #endif // MAINWINDOW_H

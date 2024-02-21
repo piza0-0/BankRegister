@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    algorithms = new BackendFunctions(this);
+    algorithms = new BackendFunctions(ui->tw_personList,this);
 
     this->setWindowTitle("Клиентская база");
     ui->tw_personList->horizontalHeader()->setHighlightSections(false);
