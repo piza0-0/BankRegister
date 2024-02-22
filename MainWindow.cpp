@@ -1,4 +1,3 @@
-
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include <QDebug>
@@ -225,7 +224,7 @@ void MainWindow::onEditPerson(const QList<QListWidgetItem*> &onEditPersonBanks) 
     if (sender() != nullptr){
         const DialogPersonEdit *onEditPerson = dynamic_cast<DialogPersonEdit*>(sender());
 
-        int currentRow = searchByPassportAndSurname(onEditPerson->oldSurname(), onEditPerson->oldPassport());
+        int currentRow = algorithms->searchByPassportAndSurname(onEditPerson->oldSurname(), onEditPerson->oldPassport());
 
         PersonTableWidgetItem* editPersonItem = dynamic_cast<PersonTableWidgetItem*>
                 (ui->tw_personList->item(currentRow,0));
@@ -254,11 +253,10 @@ void MainWindow::onEditPerson(const QList<QListWidgetItem*> &onEditPersonBanks) 
 
 void MainWindow::deletePerson()
 {
-    QObject *senderObj = sender();
-    //int columns = ui->tw_personList->columnCount();
+    QObject *senderObj = sender();    
     if (senderObj!=nullptr){
         PersonButtonEdit *pButtonDelete = dynamic_cast<PersonButtonEdit*>(senderObj);
-        int currentRow = searchByPassportAndSurname(pButtonDelete->personButton()->getSurname(),
+        int currentRow = algorithms->searchByPassportAndSurname(pButtonDelete->personButton()->getSurname(),
                                                     pButtonDelete->personButton()->getPassport());
         if(currentRow != -1){
             if(ui->tw_personList->item(currentRow, 0) != nullptr){
@@ -303,96 +301,3 @@ void MainWindow::deletePerson()
 // Можно вызывать эти две функции из какой-то одной большой функции по типу той которая сейчас внизу.
 
 
-int MainWindow::searchByPassportAndSurname(const QString &searchSurname, const QString &searchPassport)
-{
-    int rowWithCurrentSurname = binarySearchSurname(searchSurname);
-    PersonTableWidgetItem *pComparePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(rowWithCurrentSurname,0));
-    if(pComparePerson->pPerson()->getPassport() == searchPassport){
-        return rowWithCurrentSurname;
-    }
-    if (rowWithCurrentSurname != -1){
-        int downCounter = rowWithCurrentSurname;
-        int upCounter = rowWithCurrentSurname;
-
-        while (downCounter > 0 || upCounter <= ui->tw_personList->rowCount()) {
-            --downCounter;
-            ++upCounter;
-            if (downCounter >= 0){
-                pComparePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(downCounter,0));
-                if (pComparePerson->pPerson()->getPassport() == searchPassport){
-
-                    return downCounter;
-                }
-            }
-            if (upCounter <= ui->tw_personList->rowCount()){
-                pComparePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(upCounter,0));
-                if (pComparePerson->pPerson()->getPassport() == searchPassport){
-
-                    return upCounter;
-                }
-            }
-        }
-    }
-    return -1;
-}
-
-int MainWindow::binarySearchSurname(const QString &surname)
-{
-    QString searchSurnameBinary = binaryStringConcatenation(surname);
-    int rightBorder = ui->tw_personList->rowCount()-1;
-    int leftBorder = 0;
-    int middle = 0;
-
-    while (rightBorder >= leftBorder) {
-        if (leftBorder == rightBorder){
-            return leftBorder;
-        }
-        middle = (rightBorder + leftBorder) / 2;
-        if(middle < 0) {
-            qDebug() << middle << "Pizdec!!!";
-            break;
-        }
-        PersonTableWidgetItem* pComparePerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(middle,0));
-        QString compareSurnameBinary = binaryStringConcatenation(pComparePerson->pPerson()->getSurname());
-
-        if(compareSurnameBinary != searchSurnameBinary
-                && isSearchBinarySurnameIsHigher(searchSurnameBinary, compareSurnameBinary)){
-            leftBorder = middle + 1;
-        }else if(compareSurnameBinary != searchSurnameBinary
-                 && (!isSearchBinarySurnameIsHigher(searchSurnameBinary, compareSurnameBinary))){
-            rightBorder = middle - 1;
-        }else{
-            return middle;
-        }
-    }
-    return -1;
-}
-
-//Фукнция конкатенации бинарника фамилии
-
-QString MainWindow::binaryStringConcatenation(const QString &surname)
-{
-    QString binaryStringSurname;
-
-    for(int i = 0; i < surname.size(); ++i){
-        int letter = surname.at(i).unicode();
-        binaryStringSurname.push_back(QString::number(letter));
-    }
-    return binaryStringSurname;
-}
-
-//сравнение бинарных строк QString
-
-bool MainWindow::isSearchBinarySurnameIsHigher(const QString &searchSurnameBinary, const QString &compareSurnameBinary)
-{
-
-    for (int i = 0; i < searchSurnameBinary.size() && i < compareSurnameBinary; ++i){
-        if (searchSurnameBinary.at(i) > compareSurnameBinary.at(i)){
-            return 1;
-        }
-        if (searchSurnameBinary.at(i) < compareSurnameBinary.at(i)){
-            return 0;
-        }
-    }
-    return 1;
-}
