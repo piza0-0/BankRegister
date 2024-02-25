@@ -10,24 +10,20 @@ CONFIG += c++11
 
 SOURCES += \
     AuthorizationDialog.cpp \
-    BackendFunctions.cpp \
     ConnectionClass.cpp \
     DialogPersonEdit.cpp \
     MainWindow.cpp \
     Person.cpp \
-    PersonButtonEdit.cpp \
     PersonTableWidgetItem.cpp \
     RegistrationDialog.cpp \
     main.cpp
 
 HEADERS += \
     AuthorizationDialog.h \
-    BackendFunctions.h \
     ConnectionClass.h \
     DialogPersonEdit.h \
     MainWindow.h \
     Person.h \
-    PersonButtonEdit.h \
     PersonTableWidgetItem.h \
     RegistrationDialog.h
      # dialogpersonedit.h # DialogPersonEdit.h
