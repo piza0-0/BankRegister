@@ -8,13 +8,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    algorithms = new BackendFunctions(ui->tw_personList,this);
 
     this->setWindowTitle("Клиентская база");
     ui->tw_personList->horizontalHeader()->setHighlightSections(false);
     QPixmap logo(":/img_logo/images/GNUlogo_levitate.png");
     int h = ui->l_logo->height();
-    ui->l_logo->setPixmap(logo.scaled(215, h));    
+    ui->l_logo->setPixmap(logo.scaled(215, h));
     ui->tw_personList->setColumnCount(7);
     ui->tw_personList->setHorizontalHeaderLabels({"Фамилия","Имя","Отчество", "Паспорт",
                                                   "Номер", " ", " "});
@@ -43,16 +42,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tw_personList->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->lw_bankList->setSelectionMode(QAbstractItemView::NoSelection);
 
+    connect(this, &MainWindow::cellEditClicked, this, &MainWindow::createPersonEditDialog);
+    connect(this, &MainWindow::cellDeleteClicked, this, static_cast<void(MainWindow::*) ()>(&MainWindow::deletePerson));
     connect(ui->tw_personList, &QTableWidget::cellClicked,
             [=](int row, int coll) {
-                if (coll !=5){
-                    ui->lw_bankList->clear();
+        if (coll < 5){
+            ui->lw_bankList->clear();
 
-                    PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>
-                            (ui->tw_personList->item(row,0));
-                    ui->lw_bankList->addItems(personItem->getPersonBanks());
-                }
-            }
+            PersonTableWidgetItem* personItem = dynamic_cast<PersonTableWidgetItem*>
+                    (ui->tw_personList->item(row,0));
+            ui->lw_bankList->addItems(personItem->getPersonBanks());
+        }
+    }
     );
 
     ui->le_surname->setFocus();
@@ -63,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     QWidget::setTabOrder(ui->le_passport,ui->le_phone);
 
     m_bankList <<"Тинькофф"<<"ВТБ"<<"Сбербанк"<<"Альфа банк"<<"Газпром банк"<<"Росбанк"<<"Совкомбанк"<<"Райффайзен банк"<<"Открытие банк"
-             <<"Банк Санкт-Петербург"<<"Почта банк"<<"Home credit bank"<<"Банк Россия"<<"Уралсиб"<<"МКБ"<<"ПСБ"<<"ЮниКредит";
+              <<"Банк Санкт-Петербург"<<"Почта банк"<<"Home credit bank"<<"Банк Россия"<<"Уралсиб"<<"МКБ"<<"ПСБ"<<"ЮниКредит";
 
     m_bankList.sort();
     ui->lw_checkBanks->setSelectionMode(QAbstractItemView::MultiSelection);
@@ -93,38 +94,32 @@ void MainWindow::on_pb_select_clicked()
 
     PersonTableWidgetItem *pPersonTableWidgetItemSurname = new PersonTableWidgetItem(pPerson);
 
-    QTableWidgetItem *pPersonItemName = new QTableWidgetItem;
-    QTableWidgetItem *pPersonItemPatronymic = new QTableWidgetItem;
-    QTableWidgetItem *pPersonItemPassport = new QTableWidgetItem;
-    QTableWidgetItem *pPersonItemPhone = new QTableWidgetItem;
-
-
-    PersonButtonEdit *pButtonEdit = new PersonButtonEdit(pPerson);
-    pButtonEdit->setText("edit");
-    connect(pButtonEdit, &QPushButton::clicked, this, &MainWindow::createPersonEditDialog);
-
-    PersonButtonEdit *pButtonDelete = new PersonButtonEdit(pPerson);
-    pButtonDelete->setText("delete");
-    connect(pButtonDelete, &QPushButton::clicked, this,
-            static_cast<void(MainWindow::*) ()>(&MainWindow::deletePerson));
+    QTableWidgetItem *PersonItemName = new QTableWidgetItem;
+    QTableWidgetItem *PersonItemPatronymic = new QTableWidgetItem;
+    QTableWidgetItem *PersonItemPassport = new QTableWidgetItem;
+    QTableWidgetItem *PersonItemPhone = new QTableWidgetItem;
+    QTableWidgetItem *PersonItemEdit = new QTableWidgetItem;
+    QTableWidgetItem *PersonItemDelete = new QTableWidgetItem;
 
     int row = ui->tw_personList->rowCount();
     ui->tw_personList->insertRow(row);
 
     pPersonTableWidgetItemSurname->setCurrentSurname();
-    pPersonItemName->setText(pPerson->getName());
-    pPersonItemPatronymic->setText(pPerson->getPatronymic());
-    pPersonItemPassport->setText(pPerson->getPassport());
-    pPersonItemPhone->setText(pPerson->getPhone());
+    PersonItemName->setText(pPerson->getName());
+    PersonItemPatronymic->setText(pPerson->getPatronymic());
+    PersonItemPassport->setText(pPerson->getPassport());
+    PersonItemPhone->setText(pPerson->getPhone());
+    PersonItemEdit->setText("Изменить");
+    PersonItemDelete->setText("Удалить");
 
     ui->tw_personList->setItem(row,0, pPersonTableWidgetItemSurname);
-    ui->tw_personList->setItem(row,1, pPersonItemName);
-    ui->tw_personList->setItem(row,2, pPersonItemPatronymic);
-    ui->tw_personList->setItem(row,3, pPersonItemPassport);
-    ui->tw_personList->setItem(row,4, pPersonItemPhone);
+    ui->tw_personList->setItem(row,1, PersonItemName);
+    ui->tw_personList->setItem(row,2, PersonItemPatronymic);
+    ui->tw_personList->setItem(row,3, PersonItemPassport);
+    ui->tw_personList->setItem(row,4, PersonItemPhone);
+    ui->tw_personList->setItem(row,5, PersonItemEdit);
+    ui->tw_personList->setItem(row,6, PersonItemDelete);
 
-    ui->tw_personList->setCellWidget(row,5,pButtonEdit);
-    ui->tw_personList->setCellWidget(row,6,pButtonDelete);
     ui->tw_personList->sortByColumn(0,Qt::AscendingOrder);
 
     ui->lw_checkBanks->clearSelection();
@@ -146,45 +141,45 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 ////////TEST////////
 void MainWindow::on_pb_test_clicked() {
 
-        ui->le_name->setText("ТЕСТ");
-        ui->le_surname->setText("Астафьев");
-        ui->le_patronymic->setText("ТЕСТТЕСТ");
-        ui->le_passport->setText("4022689452");
-        ui->le_phone->setText("6994423338");
-        ui->lw_checkBanks->selectAll();
+    ui->le_name->setText("ТЕСТ");
+    ui->le_surname->setText("Астафьев");
+    ui->le_patronymic->setText("ТЕСТТЕСТ");
+    ui->le_passport->setText("4022689452");
+    ui->le_phone->setText("6994423338");
+    ui->lw_checkBanks->selectAll();
 
-        on_pb_select_clicked();
+    on_pb_select_clicked();
 
-        ui->le_name->setText("ТЕСТ");
-        ui->le_surname->setText("Барбоскин");
-        ui->le_patronymic->setText("ТЕСТТЕСТ");
-        ui->le_passport->setText("4016514480");
-        ui->le_phone->setText("6994423338");
-        ui->lw_checkBanks->selectAll();
-        on_pb_select_clicked();
-        ui->le_name->setText("ТЕСТ");
-        ui->le_surname->setText("Лыжин");
-        ui->le_patronymic->setText("ТЕСТТЕСТ");
-        ui->le_passport->setText("6314876328");
-        ui->le_phone->setText("6994423338");
-        ui->lw_checkBanks->selectAll();
-        on_pb_select_clicked();
+    ui->le_name->setText("ТЕСТ");
+    ui->le_surname->setText("Барбоскин");
+    ui->le_patronymic->setText("ТЕСТТЕСТ");
+    ui->le_passport->setText("4016514480");
+    ui->le_phone->setText("6994423338");
+    ui->lw_checkBanks->selectAll();
+    on_pb_select_clicked();
+    ui->le_name->setText("ТЕСТ");
+    ui->le_surname->setText("Лыжин");
+    ui->le_patronymic->setText("ТЕСТТЕСТ");
+    ui->le_passport->setText("6314876328");
+    ui->le_phone->setText("6994423338");
+    ui->lw_checkBanks->selectAll();
+    on_pb_select_clicked();
 
 
-        ui->le_name->setText("ТЕСТ");
-        ui->le_surname->setText("Парашин");
-        ui->le_patronymic->setText("ТЕСТТЕСТ");
-        ui->le_passport->setText("4016558792");
-        ui->le_phone->setText("6994423338");
-        ui->lw_checkBanks->selectAll();
-        on_pb_select_clicked();
-        ui->le_name->setText("ТЕСТ");
-        ui->le_surname->setText("Петухов");
-        ui->le_patronymic->setText("ТЕСТТЕСТ");
-        ui->le_passport->setText("6151418191");
-        ui->le_phone->setText("6994423338");
-        ui->lw_checkBanks->selectAll();
-        on_pb_select_clicked();
+    ui->le_name->setText("ТЕСТ");
+    ui->le_surname->setText("Парашин");
+    ui->le_patronymic->setText("ТЕСТТЕСТ");
+    ui->le_passport->setText("4016558792");
+    ui->le_phone->setText("6994423338");
+    ui->lw_checkBanks->selectAll();
+    on_pb_select_clicked();
+    ui->le_name->setText("ТЕСТ");
+    ui->le_surname->setText("Петухов");
+    ui->le_patronymic->setText("ТЕСТТЕСТ");
+    ui->le_passport->setText("6151418191");
+    ui->le_phone->setText("6994423338");
+    ui->lw_checkBanks->selectAll();
+    on_pb_select_clicked();
 
 }
 
@@ -206,26 +201,20 @@ bool MainWindow::lengthCheck()
 
 
 void MainWindow::createPersonEditDialog() {
-    QObject *senderObj = sender();
-    if (senderObj!=nullptr) {
-        PersonButtonEdit *pButtonEdit = dynamic_cast<PersonButtonEdit*>(senderObj);
+    PersonTableWidgetItem* editPerson = dynamic_cast<PersonTableWidgetItem*>(ui->tw_personList->item(clickedRowNumber, 0));
+    m_dialogEdit = new DialogPersonEdit(this);
+    m_dialogEdit->setModal(true);
+    m_dialogEdit->setPersonInfo(editPerson->pPerson(),editPerson->getPersonBanks());
 
-        m_dialogEdit = new DialogPersonEdit(this);
-        m_dialogEdit->setModal(true);
-        m_dialogEdit->setPersonInfo(pButtonEdit->personButton(), m_bankList);
-
-        connect(m_dialogEdit, &DialogPersonEdit::editPerson, this, &MainWindow::onEditPerson);
-        m_dialogEdit->exec();
-    }
+    connect(m_dialogEdit, &DialogPersonEdit::editPerson, this, &MainWindow::onEditPerson);
+    m_dialogEdit->exec();
 }
 
 
 void MainWindow::onEditPerson(const QList<QListWidgetItem*> &onEditPersonBanks) {
     if (sender() != nullptr){
         const DialogPersonEdit *onEditPerson = dynamic_cast<DialogPersonEdit*>(sender());
-
-        int currentRow = algorithms->searchByPassportAndSurname(onEditPerson->oldSurname(), onEditPerson->oldPassport());
-
+        int currentRow = clickedRowNumber;
         PersonTableWidgetItem* editPersonItem = dynamic_cast<PersonTableWidgetItem*>
                 (ui->tw_personList->item(currentRow,0));
 
@@ -251,34 +240,32 @@ void MainWindow::onEditPerson(const QList<QListWidgetItem*> &onEditPersonBanks) 
     }
 }
 
-void MainWindow::deletePerson()
+void MainWindow::deletePerson() {
+    int currentRow = clickedRowNumber;
+
+    if(ui->tw_personList->item(currentRow, 0) != nullptr){
+        PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
+                (ui->tw_personList->item(currentRow, 0));
+        delete personTableItem->pPerson();
+    }
+    for (int i = 0; i < ui->tw_personList->columnCount(); ++i) {
+        delete ui->tw_personList->item(currentRow, i);
+    }
+    ui->lw_bankList->clear();
+    ui->tw_personList->removeRow(currentRow);
+}
+
+void MainWindow::on_tw_personList_cellClicked(int row, int column)
 {
-    QObject *senderObj = sender();    
-    if (senderObj!=nullptr){
-        PersonButtonEdit *pButtonDelete = dynamic_cast<PersonButtonEdit*>(senderObj);
-        int currentRow = algorithms->searchByPassportAndSurname(pButtonDelete->personButton()->getSurname(),
-                                                    pButtonDelete->personButton()->getPassport());
-        if(currentRow != -1){
-            if(ui->tw_personList->item(currentRow, 0) != nullptr){
-                PersonTableWidgetItem* personTableItem = dynamic_cast<PersonTableWidgetItem*>
-                        (ui->tw_personList->item(currentRow, 0));
-                delete personTableItem->pPerson();
-                delete personTableItem;
-                personTableItem = nullptr;
-            }
-        for (int i = 1; i < 5 ; ++i) {
-            delete ui->tw_personList->item(currentRow, i);
-        }
-        for (int i = 5; i < 7; ++i){
-            delete ui->tw_personList->cellWidget(currentRow, i);
-        }
-        ui->lw_bankList->clear();
-        ui->tw_personList->removeRow(currentRow);
-    }else qDebug() << "Крашнулось удаление";
+    if(column == 5){
+        clickedRowNumber = row;
+        emit cellEditClicked();
+    }
+    if(column == 6){
+        clickedRowNumber = row;
+        emit cellDeleteClicked();
+    }
 }
-}
-
-
 
 
 
@@ -299,5 +286,9 @@ void MainWindow::deletePerson()
 // down = down - 1;
 //
 // Можно вызывать эти две функции из какой-то одной большой функции по типу той которая сейчас внизу.
+
+
+
+
 
 

@@ -6,9 +6,7 @@
 #include <QKeyEvent>
 #include "Person.h"
 #include "PersonTableWidgetItem.h"
-#include "PersonButtonEdit.h"
 #include "DialogPersonEdit.h"
-#include "BackendFunctions.h"
 
 /*
  * Завести массив где каждой букве будет соответствовать номер строки, с которой начинаются фамилии на эту букву
@@ -39,6 +37,10 @@ public:
 
     ~MainWindow();
 
+signals:
+    void cellEditClicked();
+    void cellDeleteClicked();
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 
@@ -54,12 +56,14 @@ private slots:
 
     void deletePerson();
 
+    void on_tw_personList_cellClicked(int row, int column);
+
 private:
     Ui::MainWindow *ui;    
-    BackendFunctions *algorithms = nullptr;
     QStringList m_bankList;
     bool lengthCheck();
-    DialogPersonEdit* m_dialogEdit = nullptr;    
+    DialogPersonEdit* m_dialogEdit = nullptr;
+    int clickedRowNumber = 0;
 };
 
 #endif // MAINWINDOW_H
