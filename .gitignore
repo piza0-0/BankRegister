@@ -1,3 +1,5 @@
 /build-*
 config.ini
-bin/
+bin
+*.user*
+BankRegister.pro.user/
