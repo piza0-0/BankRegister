@@ -1,4 +1,5 @@
 /build-*
+Make/
 config.ini
 bin
 *.user*
