@@ -1,4 +1,4 @@
-QT += core gui
+QT += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -9,30 +9,32 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    AuthorizationDialog.cpp \
-    ConnectionClass.cpp \
-    DialogPersonEdit.cpp \
-    MainWindow.cpp \
-    Person.cpp \
-    PersonTableWidgetItem.cpp \
-    RegistrationDialog.cpp \
+    GUI/AuthorizationDialog.cpp \
+    Backend/ConnectionClass.cpp \
+    Backend/DbBackend.cpp \
+    GUI/DialogPersonEdit.cpp \
+    GUI/MainWindow.cpp \
+    GUI/Person.cpp \
+    GUI/PersonTableWidgetItem.cpp \
+    GUI/RegistrationDialog.cpp \
     main.cpp
 
 HEADERS += \
-    AuthorizationDialog.h \
-    ConnectionClass.h \
-    DialogPersonEdit.h \
-    MainWindow.h \
-    Person.h \
-    PersonTableWidgetItem.h \
-    RegistrationDialog.h
-     # dialogpersonedit.h # DialogPersonEdit.h
+    GUI/AuthorizationDialog.h \
+    Backend/ConnectionClass.h \
+    Backend/DbBackend.h \
+    GUI/DialogPersonEdit.h \
+    GUI/MainWindow.h \
+    GUI/Person.h \
+    GUI/PersonTableWidgetItem.h \
+    GUI/RegistrationDialog.h
+    
 
 FORMS += \
-    AuthorizationDialog.ui \
-    DialogPersonEdit.ui \
-    MainWindow.ui \
-    RegistrationDialog.ui
+    GUI/AuthorizationDialog.ui \
+    GUI/DialogPersonEdit.ui \
+    GUI/MainWindow.ui \
+    GUI/RegistrationDialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -40,4 +42,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    img_resource.qrc
+    Recources/img_resource.qrc
