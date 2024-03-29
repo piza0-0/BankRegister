@@ -41,5 +41,13 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+DESTDIR = ../bin
+
+OBJECTS_DIR = ../bin
+
+MOC_DIR = ../bin
+
+UI_DIR = ../bin
+
 RESOURCES += \
     Recources/img_resource.qrc
