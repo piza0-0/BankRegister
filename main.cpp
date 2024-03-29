@@ -1,4 +1,4 @@
-#include "ConnectionClass.h"
+#include "Backend/ConnectionClass.h"
 
 #include <QApplication>
 
